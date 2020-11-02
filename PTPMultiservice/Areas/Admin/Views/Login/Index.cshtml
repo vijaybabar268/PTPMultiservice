@@ -6,7 +6,7 @@
 
 <style>
     .my-login-form {
-        background: antiquewhite;
+        /*background: antiquewhite;*/
         text-align: center;
         width: 50%;
         margin: 100px auto;
@@ -36,7 +36,7 @@
     }
 </style>
 
-<div class="row my-login-form">
+<div class="row my-login-form jumbotron">
     <div class="col-md-12">
         <div class="">
             @using (Html.BeginForm("IndexProcess", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
