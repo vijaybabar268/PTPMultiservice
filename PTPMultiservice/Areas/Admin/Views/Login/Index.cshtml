@@ -1,0 +1,90 @@
+﻿@model PTPMultiservice.ViewModels.AdminFormViewModel
+
+@{
+    ViewBag.Title = "Administrator Login";
+}
+
+<style>
+    .my-login-form {
+        background: antiquewhite;
+        text-align: center;
+        width: 50%;
+        margin: 100px auto;
+    }
+    .my-login-form input {        
+        margin: 0 auto;
+    }
+    .my-login-form button {
+        padding: 6px 10px;        
+        margin: 0 auto;
+        width: auto;
+    }
+    .my-login-form h2{
+        padding-bottom:10px;
+    }
+    .clearfix {
+        padding-bottom: 10px;
+    }
+    .validation-summary-errors ul{
+        padding:0;
+    }
+    .validation-summary-errors ul li {
+        list-style: none;
+        color: red;
+        text-align: center;
+        margin: 0 auto;
+    }
+</style>
+
+<div class="row my-login-form">
+    <div class="col-md-12">
+        <div class="">
+            @using (Html.BeginForm("IndexProcess", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="avatar">
+                    <img src="~/Content/img/avatar.png" alt="Avatar">
+                </div>
+
+                <h2 class="text-center">@ViewBag.Title</h2>
+
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.email, new { @class = "form-control my-form-control", placeholder = "Email" })
+                    @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.PasswordFor(m => m.password, new { @class = "form-control my-form-control", placeholder = "Password" })
+                    @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Log in</button>
+                </div>
+
+                @Html.ValidationSummary(true)
+
+                <div class="bottom-action clearfix text-center">
+                    <a href="#" class="js-new-admin">New Admin</a> |
+                    <a href="#" class="float-right js-forgot-pwd">Forgot Password?</a>
+                </div>
+            }
+        </div>      
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".navbar").hide();
+        $("footer").hide();
+        $("footer").parents('div').find('hr').hide();
+
+
+        $(".js-forgot-pwd, .js-new-admin").click(function () {
+            alert("In case any query kindly contact:-  \nVijay Babar \nMobile:- 9619331535, 7977510092 \nEmail:- babarvm@gmail.com \nThank you.");
+        })
+    });       
+</script>
+

@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace PTPMultiservice.Models
+namespace PTPMultiservice.ViewModels
 {
-    [Table("admins")]
-    public class Admin
+    public class AdminFormViewModel
     {
-        [Key]
         public int admin_id { get; set; }
         public string name { get; set; }
         public string email { get; set; }
