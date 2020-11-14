@@ -1,0 +1,220 @@
+﻿@model PTPMultiservice.ViewModels.PartnerFormViewModel
+
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="main-block">
+    @using (Html.BeginForm("Save", "Partners", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+    <div class="info">
+        @Html.HiddenFor(m => m.partner_id)
+        @Html.HiddenFor(m => m.Title)
+        @*@Html.HiddenFor(m => m.PartnerId)
+        @Html.HiddenFor(m => m.UserId)*@
+
+        @Html.AntiForgeryToken()
+        <hr />
+
+        @*<div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserName, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.Password("Password", @Model.Password, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-2 col-form-label" })
+                <div class="col-md-8">
+                    @Html.Password("ConfirmPassword", @Model.Password, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>*@
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.first_name, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.first_name, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.middle_name, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.middle_name, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.last_name, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.last_name, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.mother_name, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.mother_name, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.education_id, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(m => m.education_id, new SelectList(Model.EducationQualifications, "Id", "Name"), "--Select--", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.designation_id, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(m => m.designation_id, new SelectList(Model.Designations, "Id", "Name"), "--Select--", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.marital_status_id, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(m => m.marital_status_id, new SelectList(Model.MaritalStatus, "Id", "Name"), "--Select--", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.gender_id, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(m => m.gender_id, new SelectList(Model.Genders, "Id", "Name"), "--Select--", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.mobile, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.mobile, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.tel, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.tel, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.email, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.email, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.identity_body_mark, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.identity_body_mark, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.birth_date, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.birth_date, "{0:dd MMM yyyy}", new { @class = "form-control", placeholder = "ie. 01 Jan 1990" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.joining_date, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.joining_date, "{0:dd MMM yyyy}", new { @class = "form-control", placeholder = "ie. 01 Jan 1990" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.present_address, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(m => m.present_address, new { @class = "form-control", rows = "4" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.permanent_address, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(m => m.permanent_address, new { @class = "form-control", rows = "4" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.remarks, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(m => m.remarks, new { @class = "form-control", rows = "4" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12 text-center">
+                <input type="submit" class="btn btn-primary" value="Save" />
+            </div>
+        </div>
+
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+    </div>
+    }
+</div>
+
+<input type="hidden" value="@Model.Title" id="Title"/>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")    
+}
+
+<script>
+    $(document).ready(function () {
+        debugger
+        if ($("#Title").val() == "Partner Details") {
+            $("input, textarea, select").prop('disabled', true).css('border', 'none').css('background', 'none').removeClass('form-control');
+            $('input[type="submit"]').hide();
+        }
+    });
+</script>

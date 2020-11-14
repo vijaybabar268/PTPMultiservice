@@ -1,0 +1,144 @@
+﻿@model PTPMultiservice.ViewModels.PartnerViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int srNo = 1;
+}
+
+<style>
+    .remove-padding a{
+        padding: 0;
+    }
+</style>
+
+<h2 class="adminTitle text-center text-uppercase">@ViewBag.Title</h2>
+
+@Html.ActionLink("Add Partner", "New", "Partners", null, new { @class = "btn btn-primary add-btn" })
+
+<div class="tableDiv">
+    <table id="adminTbl" class="table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Sr</th>
+                <th>Name</th>
+                <th>Mobile No</th>
+                <th>Email</th>
+                <th>DOJ</th>
+                <th>Education</th>
+                <th>Designation</th>
+                <th>Status</th>
+                <th width="13%">Other Info</th>
+                <th width="13%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.Partners)
+                {
+                    <tr>
+                        <td>@srNo</td>
+                        <td>@Html.ActionLink(string.Format("{0} {1} {2}", item.first_name, item.middle_name, item.last_name), "Details", new { id = item.partner_id }, new { @class = "btn btn-link", Title = "Click me for more information." })</td>
+                        <td>@item.mobile</td>
+                        <td>@item.email</td>
+                        <td>@string.Format("{0:dd-MM-yyyy}", item.joining_date)</td>                        
+                        <td>@Model.EducationQualifications.FirstOrDefault(x => x.Id == item.education_id).Name</td>
+                        <td>@Model.Designations.FirstOrDefault(x => x.Id == item.designation_id).Name</td>                        
+                        <td>
+                            @{
+                                if (item.is_active)
+                                {
+                                    <span class="badge badge-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">In-Active</span>
+                                }
+                            }
+                        </td>
+                        <td class="remove-padding">
+                            @Html.ActionLink("Document Details", "DocumentDetail", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Bank Details", "BankDetail", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Responsible Site", "ResponsibleSite", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Tearms & Conditions", "TearmsCondition", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" })
+                        </td>
+                        <td class="remove-padding"> 
+                            @Html.ActionLink("Edit", "Edit", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Toggle Status", "ToggleStatus", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link", onClick = "return confirm('Are you sure you want to perform this action?')" }) |
+
+                            @using (@Html.BeginForm("Delete", "Partners", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", item.partner_id)
+                                <button type="submit" class="btn btn-link" style=" padding: 0;">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                    srNo++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+{
+    <script>
+        /*$(document).ready(function () {
+            var table = $("#adminTbl").DataTable({
+                ajax: {
+                    url: "/Api/Admin",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "username",
+                        render: function (data, type, admin) {
+                            return '<a href="javascript:void(0)" title=' + admin.UserName + '>' + admin.UserName + '</a>';
+                        }
+                    },
+                    {
+                        data: "email",
+                        render: function (data, type, admin) {
+                            return '' + admin.Email + '';
+                        }
+                    },
+                    {
+                        data: "isactive",
+                        render: function (data, type, admin) {
+                            if (admin.IsActive === true)
+                                return "<span class='badge badge-success'>Active</span>";
+                            else {
+                                return "<span class='badge badge-warning'>Inactive</span>";
+                            }
+                        }
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, admin) {
+                            return  '<a class="btn btn-link" href="Admins/Edit/' + admin.Id + '">Edit</a> | ' +
+                                    '<a class="btn btn-link" href="Admins/ToggleStatus/' + admin.Id + '">Toggle Status</a> | ' +
+                                    '<button class="btn btn-link js-delete" data-admin-id="' + admin.Id + '">Delete</button>';
+                        }
+                    }
+                ]
+            });
+
+            $("#adminTbl").on("click", ".js-delete", function () {
+                var button = $(this);
+                if (confirm("Are you sure you want to perform these action?")) {
+                    $.ajax({
+                        url: "/Api/Admin/" + button.attr("data-admin-id"),
+                        method: "DELETE",
+                        success: function () {
+                            table.row(button.parents("tr")).remove().draw();
+                        }, error: function (error) {
+                            console.log("error");
+                        }
+                    })
+                }
+
+            });
+        });*/
+    </script>
+}

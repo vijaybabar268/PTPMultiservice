@@ -20,5 +20,6 @@ namespace PTPMultiservice.Models
         }
 
         public DbSet<Admin> Admins { get; set; }
+        public DbSet<Partner> Partners { get; set; }    
     }
 }

@@ -18,10 +18,4 @@ namespace PTPMultiservice.Models
         public DateTime created_on { get; set; }
         public bool is_active { get; set; }
     }
-
-    [Table("partners")]
-    public class Partner
-    {
-
-    }
 }
