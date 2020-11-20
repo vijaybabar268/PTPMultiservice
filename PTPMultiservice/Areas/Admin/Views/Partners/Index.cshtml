@@ -57,7 +57,7 @@
                             }
                         </td>
                         <td class="remove-padding">
-                            @Html.ActionLink("Document Details", "DocumentDetail", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Document Details", "PartnerDocumentsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.Documents.Where(d=>d.partner_id == item.partner_id).Count()) |
                             @Html.ActionLink("Bank Details", "BankDetail", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" }) |
                             @Html.ActionLink("Responsible Site", "ResponsibleSite", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" }) |
                             @Html.ActionLink("Tearms & Conditions", "TearmsCondition", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" })

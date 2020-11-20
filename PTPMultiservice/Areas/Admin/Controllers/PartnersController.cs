@@ -30,7 +30,8 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                     EducationQualifications = ManageDependancyData.GetEducationQualification(),
                     Designations = ManageDependancyData.GetDesignations(),
                     MaritalStatus = ManageDependancyData.GetMaritalStatus(),
-                    Genders = ManageDependancyData.GetGenders()
+                    Genders = ManageDependancyData.GetGenders(),
+                    Documents = _context.Documents.ToList()
                 };
 
                 return View(viewModel);
@@ -248,6 +249,138 @@ namespace PTPMultiservice.Areas.Admin.Controllers
             };
                         
             return View("PartnerForm", viewModel);
+        }
+
+
+        // Manage Partner Documnets
+        public ActionResult PartnerDocumentsIndex(int partner_id)
+        {
+            try
+            {
+                List<Document> documents = _context.Documents.Where(d => d.partner_id == partner_id).ToList();
+
+                DocumentViewModel viewModel = new DocumentViewModel
+                {
+                    DocumentTypes = ManageDependancyData.DocumentTypes(),
+                    Documents = documents
+                };
+
+                Session["PartnerId"] = partner_id;
+
+                var partner = _context.Partners.FirstOrDefault(p => p.partner_id == partner_id);
+                ViewBag.Title = "Manage Documents For " + partner.first_name + " " + partner.middle_name + " " + partner.last_name;
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public ActionResult PartnerDocumentsNew()
+        {
+            DocumentFormViewModel viewModel = new DocumentFormViewModel
+            {
+                DocTypes = ManageDependancyData.DocumentTypes(),
+                Title = "New Document"
+            };
+
+            return View("DocumentForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PartnerDocumentsSave(DocumentFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("DocumentForm", viewModel);
+            }
+
+            if (viewModel.document_id == 0)
+            {
+                Document document = new Document
+                {
+                    type = viewModel.type,
+                    name = viewModel.name,
+                    number = viewModel.number,
+                    birthdate = viewModel.birthdate,
+                    address = viewModel.address,
+                    partner_id = int.Parse(Session["PartnerId"].ToString())
+                };
+
+                _context.Documents.Add(document);
+                _context.SaveChanges();
+            }
+            else
+            {
+                Document documentInDb = _context.Documents.Where(x => x.document_id == viewModel.document_id).FirstOrDefault();
+
+                if (documentInDb == null)
+                {
+                    ModelState.AddModelError("", "Bad request.");
+                    return View("DocumentForm", viewModel);
+                }
+
+                documentInDb.type = viewModel.type;
+                documentInDb.name = viewModel.name;
+                documentInDb.number = viewModel.number;
+                documentInDb.birthdate = viewModel.birthdate;
+                documentInDb.address = viewModel.address;
+
+                _context.Entry(documentInDb).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("PartnerDocumentsIndex", 
+                new { partner_id = int.Parse(Session["PartnerId"].ToString()) });
+        }
+
+        public ActionResult PartnerDocumentsEdit(int id)
+        {
+            Document documentInDb = _context.Documents.Where(x => x.document_id == id).FirstOrDefault();
+
+            if (documentInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("DocumentForm", documentInDb);
+            }
+
+            DocumentFormViewModel viewModel = new DocumentFormViewModel
+            {
+                document_id = documentInDb.document_id,
+                DocTypes = ManageDependancyData.DocumentTypes(),
+                type = documentInDb.type,
+                name = documentInDb.name,
+                number = documentInDb.number,
+                birthdate = documentInDb.birthdate,
+                address = documentInDb.address,
+                partner_id = int.Parse(Session["PartnerId"].ToString()),
+                Title = "Edit Document"
+            };
+
+            return View("DocumentForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PartnerDocumentsDelete(int id)
+        {
+            Document documentInDb = _context.Documents.Where(x => x.document_id == id).FirstOrDefault();
+
+            if (documentInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("DocumentForm", documentInDb);
+            }
+
+            _context.Documents.Remove(documentInDb);
+            _context.SaveChanges();
+
+            return RedirectToAction("PartnerDocumentsIndex", 
+                new { partner_id = int.Parse(Session["PartnerId"].ToString()) });
         }
     }
 }

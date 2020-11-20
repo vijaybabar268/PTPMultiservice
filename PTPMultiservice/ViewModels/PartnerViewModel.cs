@@ -23,6 +23,8 @@ namespace PTPMultiservice.ViewModels
         public IEnumerable<Dropdown> Designations { get; set; }
         public IEnumerable<Dropdown> MaritalStatus { get; set; }
         public IEnumerable<Dropdown> Genders { get; set; }
+
+        public IEnumerable<Document> Documents { get; set; }
     }
 
     public class PartnerFormViewModel

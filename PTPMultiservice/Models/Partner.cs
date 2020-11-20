@@ -25,10 +25,7 @@ namespace PTPMultiservice.Models
         public string present_address { get; set; }
         public string permanent_address { get; set; }
         public string identity_body_mark { get; set; }
-        public string remarks { get; set; }
-        public int? document_id { get; set; }
-        public int? bank_id { get; set; }
-        public int? terms_condition_id { get; set; }
+        public string remarks { get; set; }        
         public bool is_active { get; set; }
         public DateTime created_on { get; set; }
     }

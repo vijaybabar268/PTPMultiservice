@@ -13,6 +13,22 @@ namespace PTPMultiservice.Models
             public string Name { get; set; }
         }
 
+        public class CustomDropdown
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+        }
+
+        public static IEnumerable<Dropdown> DocumentTypes()
+        {
+            return new List<Dropdown>()
+            {
+                new Dropdown {Id =1, Name = "PAN CARD"},
+                new Dropdown {Id =2, Name = "ADHAR CARD"},
+                new Dropdown {Id =3, Name = "PASSPORT"},
+            };
+        }
+
         public static IEnumerable<Dropdown> GetRegions()
         {
             return new List<Dropdown>()
