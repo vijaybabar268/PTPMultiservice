@@ -20,7 +20,10 @@ namespace PTPMultiservice.Models
         }
 
         public DbSet<Admin> Admins { get; set; }
+
         public DbSet<Partner> Partners { get; set; }
         public DbSet<Document> Documents { get; set; }
+        public DbSet<BankDetail> BankDetails { get; set; }
+        public DbSet<TermsCondition> TermsConditions { get; set; }
     }
 }

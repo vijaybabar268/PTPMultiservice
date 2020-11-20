@@ -1,0 +1,86 @@
+﻿@model PTPMultiservice.ViewModels.TermsConditionFormViewModel
+
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="main-block">
+    @using (Html.BeginForm("TearmsConditionsSave", "Partners", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <div class="info">
+            @Html.HiddenFor(m => m.terms_condition_id)
+            @Html.HiddenFor(m => m.Title)
+            @Html.AntiForgeryToken()
+            <hr />
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.pl_sharing_percent, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.pl_sharing_percent, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.monthly_incentives, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.monthly_incentives, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.yearly_incentives, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.yearly_incentives, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.other_perks, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.other_perks, new { @class = "form-control", rows = "4" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.notice_period_in_days, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.notice_period_in_days, new { @class = "form-control", rows = "4" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.other_terms, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(m => m.other_terms, new { @class = "form-control", rows = "4" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-12 text-center">
+                    <input type="submit" class="btn btn-primary" value="Save" />
+                </div>
+            </div>
+
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+        </div>
+    }
+</div>
+
+<input type="hidden" value="@Model.Title" id="Title" />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

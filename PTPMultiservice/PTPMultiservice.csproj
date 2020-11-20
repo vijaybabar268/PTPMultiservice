@@ -192,7 +192,6 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
-    <Compile Include="Models\Document.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageDependancyData.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -200,7 +199,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AdminFormViewModel.cs" />
-    <Compile Include="ViewModels\DocumentViewModel.cs" />
     <Compile Include="ViewModels\PartnerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +226,10 @@
     <Content Include="Areas\Admin\Views\Partners\PartnerForm.cshtml" />
     <Content Include="Areas\Admin\Views\Partners\DocumentForm.cshtml" />
     <Content Include="Areas\Admin\Views\Partners\PartnerDocumentsIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Partners\BankDetailsIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Partners\BankDetailForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Partners\TearmsConditionsIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Partners\TearmsConditionForm.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -25,6 +25,8 @@ namespace PTPMultiservice.ViewModels
         public IEnumerable<Dropdown> Genders { get; set; }
 
         public IEnumerable<Document> Documents { get; set; }
+        public IEnumerable<BankDetail> BankDetails { get; set; }
+        public IEnumerable<TermsCondition> TermsConditions { get; set; }
     }
 
     public class PartnerFormViewModel
@@ -96,6 +98,125 @@ namespace PTPMultiservice.ViewModels
         public IEnumerable<Dropdown> Designations { get; set; }
         public IEnumerable<Dropdown> MaritalStatus { get; set; }
         public IEnumerable<Dropdown> Genders { get; set; }
+
+        public string Title { get; set; }
+    }
+
+
+    public class DocumentViewModel
+    {
+        public string Title
+        {
+            get
+            {
+                return "Manage Documents";
+            }
+        }
+
+        public IEnumerable<Document> Documents { get; set; }
+        public IEnumerable<Dropdown> DocumentTypes { get; set; }
+    }
+
+    public class DocumentFormViewModel
+    {
+        public int document_id { get; set; }
+
+        [Display(Name = "Document Type")]
+        public string type { get; set; }
+
+        [Display(Name = "Name")]
+        public string name { get; set; }
+
+        [Display(Name = "Number")]
+        public string number { get; set; }
+
+        [Display(Name = "Bithdate")]
+        public DateTime? birthdate { get; set; }
+
+        [Display(Name = "Address")]
+        public string address { get; set; }
+
+        public int partner_id { get; set; }
+
+        public IEnumerable<Dropdown> DocTypes { get; set; }
+
+        public string Title { get; set; }
+    }
+
+    public class BankDetailViewModel
+    {
+        public string Title
+        {
+            get
+            {
+                return "Manage Bank Details";
+            }
+        }
+
+        public IEnumerable<BankDetail> bankDetails { get; set; }
+    }
+
+    public class BankDetailFormViewModel
+    {
+        public int bank_id { get; set; }
+
+        [Display(Name = "Account Number")]
+        public string account_no { get; set; }
+
+        [Display(Name = "Bank Holder Name")]
+        public string bank_holder_name { get; set; }
+
+        [Display(Name = "Bank Name")]
+        public string bank_name { get; set; }
+
+        [Display(Name = "IFSC Code")]
+        public string ifsc_code { get; set; }
+
+        [Display(Name = "Branch Name")]
+        public string branch_name { get; set; }
+
+        public int partner_id { get; set; }
+
+        public string Title { get; set; }
+    }
+
+
+    public class TermsConditionViewModel
+    {
+        public string Title
+        {
+            get
+            {
+                return "Manage Bank Details";
+            }
+        }
+
+        public IEnumerable<TermsCondition> TermsConditions { get; set; }
+    }
+
+    public class TermsConditionFormViewModel
+    {
+        public int terms_condition_id { get; set; }
+        
+        [Display(Name = "PL Sharing Percent")]
+        public float pl_sharing_percent { get; set; }
+
+        [Display(Name = "Monthly Incentives")]
+        public float monthly_incentives { get; set; }
+
+        [Display(Name = "Yearly Incentives")]
+        public float yearly_incentives { get; set; }
+
+        [Display(Name = "Other Perks")]
+        public float other_perks { get; set; }
+
+        [Display(Name = "Notice Period in Days")]
+        public int notice_period_in_days { get; set; }
+
+        [Display(Name = "Any Other Terms and Conditions")]
+        public string other_terms { get; set; }
+
+        public int partner_id { get; set; }
 
         public string Title { get; set; }
     }

@@ -28,7 +28,7 @@
                 <th>Education</th>
                 <th>Designation</th>
                 <th>Status</th>
-                <th width="13%">Other Info</th>
+                <th width="15%">Other Info</th>
                 <th width="13%">Action</th>
             </tr>
         </thead>
@@ -57,10 +57,9 @@
                             }
                         </td>
                         <td class="remove-padding">
-                            @Html.ActionLink("Document Details", "PartnerDocumentsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.Documents.Where(d=>d.partner_id == item.partner_id).Count()) |
-                            @Html.ActionLink("Bank Details", "BankDetail", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" }) |
-                            @Html.ActionLink("Responsible Site", "ResponsibleSite", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" }) |
-                            @Html.ActionLink("Tearms & Conditions", "TearmsCondition", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" })
+                            @Html.ActionLink("Document Details", "PartnerDocumentsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.Documents.Where(d => d.partner_id == item.partner_id).Count()) |
+                            @Html.ActionLink("Bank Details", "BankDetailsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.BankDetails.Where(d => d.partner_id == item.partner_id).Count()) |
+                            @Html.ActionLink("Tearms & Conditions", "TearmsConditionsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.TermsConditions.Where(d => d.partner_id == item.partner_id).Count())
                         </td>
                         <td class="remove-padding"> 
                             @Html.ActionLink("Edit", "Edit", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" }) |
@@ -80,65 +79,3 @@
         </tbody>
     </table>
 </div>
-
-@section Scripts
-{
-    <script>
-        /*$(document).ready(function () {
-            var table = $("#adminTbl").DataTable({
-                ajax: {
-                    url: "/Api/Admin",
-                    dataSrc: ""
-                },
-                columns: [
-                    {
-                        data: "username",
-                        render: function (data, type, admin) {
-                            return '<a href="javascript:void(0)" title=' + admin.UserName + '>' + admin.UserName + '</a>';
-                        }
-                    },
-                    {
-                        data: "email",
-                        render: function (data, type, admin) {
-                            return '' + admin.Email + '';
-                        }
-                    },
-                    {
-                        data: "isactive",
-                        render: function (data, type, admin) {
-                            if (admin.IsActive === true)
-                                return "<span class='badge badge-success'>Active</span>";
-                            else {
-                                return "<span class='badge badge-warning'>Inactive</span>";
-                            }
-                        }
-                    },
-                    {
-                        data: "id",
-                        render: function (data, type, admin) {
-                            return  '<a class="btn btn-link" href="Admins/Edit/' + admin.Id + '">Edit</a> | ' +
-                                    '<a class="btn btn-link" href="Admins/ToggleStatus/' + admin.Id + '">Toggle Status</a> | ' +
-                                    '<button class="btn btn-link js-delete" data-admin-id="' + admin.Id + '">Delete</button>';
-                        }
-                    }
-                ]
-            });
-
-            $("#adminTbl").on("click", ".js-delete", function () {
-                var button = $(this);
-                if (confirm("Are you sure you want to perform these action?")) {
-                    $.ajax({
-                        url: "/Api/Admin/" + button.attr("data-admin-id"),
-                        method: "DELETE",
-                        success: function () {
-                            table.row(button.parents("tr")).remove().draw();
-                        }, error: function (error) {
-                            console.log("error");
-                        }
-                    })
-                }
-
-            });
-        });*/
-    </script>
-}
