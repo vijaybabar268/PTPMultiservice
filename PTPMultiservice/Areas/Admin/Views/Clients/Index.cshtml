@@ -1,0 +1,78 @@
+﻿@model PTPMultiservice.ViewModels.ClientViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int srNo = 1;
+}
+
+<style>
+    .remove-padding a {
+        padding: 0;
+    }
+</style>
+
+<h2 class="adminTitle text-center text-uppercase">@ViewBag.Title</h2>
+
+@Html.ActionLink("Add Client", "New", "Clients", null, new { @class = "btn btn-primary add-btn" })
+
+<div class="tableDiv">
+    <table id="adminTbl" class="table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Sr</th>
+                <th>Name</th>
+                <th>Branch</th>
+                <th>Industry</th>
+                <th>Site Address</th>
+                <th>Corporate Office Address</th>                
+                <th>Status</th>
+                <th width="15%">Other Info</th>
+                <th width="13%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.Clients)
+                {
+                        <tr>
+                            <td>@srNo</td>
+                            <td>@Html.ActionLink(string.Format("{0}", item.client_name), "Details", new { id = item.client_id }, new { @class = "btn btn-link", Title = "Click me for more information." })</td>
+                            <td>@item.branch</td>
+                            <td>@Model.Industries.FirstOrDefault(x => x.Id == item.industry_id).Name</td>
+                            <td>@item.site_address</td>
+                            <td>@item.corporate_office_address</td>                            
+                            <td>
+                                @{
+                                    if (item.is_active)
+                                    {
+                                        <span class="badge badge-success">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-warning">In-Active</span>
+                                    }
+                                }
+                            </td>
+                            <td class="remove-padding">
+                                @Html.ActionLink("Contact Details", "ClientContactsIndex", "Clients", new { client_id = item.client_id }, new { @class = "btn btn-link" }) @*(@Model.Documents.Where(d => d.partner_id == item.partner_id).Count())*@ |
+                                @Html.ActionLink("Manage Relations", "ClientRelationsIndex", "Clients", new { client_id = item.client_id }, new { @class = "btn btn-link" }) @*(@Model.BankDetails.Where(d => d.partner_id == item.partner_id).Count())*@                                
+                            </td>
+                            <td class="remove-padding">
+                                @Html.ActionLink("Edit", "Edit", "clients", new { id = item.client_id }, new { @class = "btn btn-link" }) |
+                                @Html.ActionLink("Toggle Status", "ToggleStatus", "clients", new { id = item.client_id }, new { @class = "btn btn-link", onClick = "return confirm('Are you sure you want to perform this action?')" }) |
+
+                                @using (@Html.BeginForm("Delete", "clients", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("id", item.client_id)
+                                    <button type="submit" class="btn btn-link" style=" padding: 0;">Delete</button>
+                                }
+                            </td>
+                        </tr>
+                    srNo++;
+                }
+            }
+        </tbody>
+    </table>
+</div>

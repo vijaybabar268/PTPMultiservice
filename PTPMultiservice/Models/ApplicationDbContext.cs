@@ -25,5 +25,7 @@ namespace PTPMultiservice.Models
         public DbSet<Document> Documents { get; set; }
         public DbSet<BankDetail> BankDetails { get; set; }
         public DbSet<TermsCondition> TermsConditions { get; set; }
+
+        public DbSet<Client> Clients { get; set; }
     }
 }
