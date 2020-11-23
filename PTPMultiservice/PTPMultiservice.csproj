@@ -236,6 +236,10 @@
     <Content Include="Areas\Admin\Views\Partners\TearmsConditionForm.cshtml" />
     <Content Include="Areas\Admin\Views\Clients\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Clients\ClientForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Clients\ClientContactsIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Clients\ClientContactForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Clients\ClientRelationsIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Clients\ClientRelationForm.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

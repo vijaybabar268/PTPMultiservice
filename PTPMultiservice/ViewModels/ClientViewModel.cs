@@ -19,6 +19,9 @@ namespace PTPMultiservice.ViewModels
         public IEnumerable<Client> Clients { get; set; }
         public IEnumerable<Dropdown> Regions { get; set; }
         public IEnumerable<Dropdown> Industries { get; set; }
+
+        public IEnumerable<ClientContactDetail> ClientContactDetails { get; set; }
+        public IEnumerable<ClientRelation> ClientRelations { get; set; }    
     }
 
     public class ClientFormViewModel
@@ -45,15 +48,99 @@ namespace PTPMultiservice.ViewModels
 
         [Display(Name = "Remarks")]
         public string remarks { get; set; }
-        
+
         public DateTime created_on { get; set; }
-        
+
         public bool is_active { get; set; }
-        
+
         public string Title { get; set; }
 
         public IEnumerable<Dropdown> Regions { get; set; }
 
         public IEnumerable<Dropdown> Industries { get; set; }
+    }
+
+
+    public class ClientContactViewModel
+    {
+        public string Title
+        {
+            get
+            {
+                return "Manage Client Contacts";
+            }
+        }
+
+        public IEnumerable<ClientContactDetail> ClientContactDetails { get; set; }
+        public IEnumerable<Dropdown> Designations { get; set; }
+        public IEnumerable<Dropdown> ManagementLevels { get; set; }
+        public IEnumerable<Dropdown> Departments { get; set; }
+    }
+
+    public class ClientContactFormViewModel
+    {
+        public int contact_id { get; set; }
+
+        [Display(Name = "Contact Name")]
+        public string contact_name { get; set; }
+
+        public IEnumerable<Dropdown> Designations { get; set; }
+        [Display(Name = "Designation")]
+        public int designation_id { get; set; }
+
+        public IEnumerable<Dropdown> ManagementLevels { get; set; }
+        [Display(Name = "Management Level")]
+        public int management_level_id { get; set; }
+
+        public IEnumerable<Dropdown> Departments { get; set; }
+        [Display(Name = "Department")]
+        public int department_id { get; set; }
+
+        [Display(Name = "Reorting Manager")]
+        public string reporting_manager { get; set; }
+
+        [Display(Name = "Birthdate")]
+        public DateTime? birthdate { get; set; }
+
+        [Display(Name = "Email Address")]
+        public string email_id { get; set; }
+
+        [Display(Name = "Mobile Number")]
+        public string mobile_no { get; set; }
+
+        [Display(Name = "Tel Number")]
+        public string tel_no { get; set; }
+
+        public int client_id { get; set; }
+
+        public string Title { get; set; }
+    }
+
+    public class ClientRelationViewModel
+    {
+        public string Title
+        {
+            get
+            {
+                return "Manage Client Relations";
+            }
+        }
+
+        public IEnumerable<ClientRelation> ClientRelations { get; set; }
+    }
+
+    public class ClientRelationFormViewModel
+    {
+        public int relation_id { get; set; }
+
+        [Display(Name = "Relation Name")]
+        public string relation_name { get; set; }
+
+        [Display(Name = "Remarks")]
+        public string remarks { get; set; }
+
+        public int client_id { get; set; }
+
+        public string Title { get; set; }
     }
 }

@@ -27,5 +27,7 @@ namespace PTPMultiservice.Models
         public DbSet<TermsCondition> TermsConditions { get; set; }
 
         public DbSet<Client> Clients { get; set; }
+        public DbSet<ClientContactDetail> ClientContactDetails { get; set; }
+        public DbSet<ClientRelation> ClientRelations { get; set; }
     }
 }

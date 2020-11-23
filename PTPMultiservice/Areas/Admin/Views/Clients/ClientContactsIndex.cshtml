@@ -1,0 +1,60 @@
+﻿@model PTPMultiservice.ViewModels.ClientContactViewModel
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int srNo = 1;
+}
+
+<style>
+    .remove-padding a {
+        padding: 0;
+    }
+</style>
+
+<h2 class="adminTitle text-center text-uppercase">@ViewBag.Title</h2>
+
+@Html.ActionLink("Add Contact", "ClientContactsNew", "Clients", null, new { @class = "btn btn-primary add-btn" })
+
+<div class="tableDiv">
+    <table id="adminTbl" class="table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Sr</th>
+                <th>Contact Name</th>
+                <th>Designation</th>
+                <th>Department</th>
+                <th>Birthdate</th>
+                <th>Reporting Manager</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.ClientContactDetails)
+                {
+                    <tr>
+                        <td>@srNo</td>
+                        <td>@item.contact_name</td>
+                        <td>@Model.Designations.FirstOrDefault(x => x.Id == item.designation_id).Name</td>
+                        <td>@Model.Departments.FirstOrDefault(x => x.Id == item.department_id).Name</td>
+                        <td>@string.Format("{0:dd-MM-yyyy}", item.birthdate)</td>
+                        <td>@item.reporting_manager</td>
+                        <td class="remove-padding">
+                            @Html.ActionLink("Edit", "ClientContactsEdit", "Clients", new { id = item.contact_id }, new { @class = "btn btn-link" }) |
+
+                            @using (@Html.BeginForm("ClientContactsDelete", "Clients", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", item.contact_id)
+                                <button type="submit" class="btn btn-link" style=" padding: 0;">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                    srNo++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@Html.ActionLink("Back to List", "Index", "Clients", null, new { @class = "btn btn-link add-btn" })
