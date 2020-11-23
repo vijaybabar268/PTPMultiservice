@@ -182,6 +182,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ClientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EmployeesController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\PartnersController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageDependancyData.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -202,6 +204,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AdminFormViewModel.cs" />
     <Compile Include="ViewModels\ClientViewModel.cs" />
+    <Compile Include="ViewModels\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\PartnerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -240,6 +243,8 @@
     <Content Include="Areas\Admin\Views\Clients\ClientContactForm.cshtml" />
     <Content Include="Areas\Admin\Views\Clients\ClientRelationsIndex.cshtml" />
     <Content Include="Areas\Admin\Views\Clients\ClientRelationForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Employees\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Employees\EmployeeForm.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

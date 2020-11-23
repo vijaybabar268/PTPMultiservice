@@ -29,5 +29,12 @@ namespace PTPMultiservice.Models
         public DbSet<Client> Clients { get; set; }
         public DbSet<ClientContactDetail> ClientContactDetails { get; set; }
         public DbSet<ClientRelation> ClientRelations { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeeDocumentDetail> EmployeeDocumentDetails { get; set; }
+        public DbSet<EmployeeBankDetail> EmployeeBankDetails { get; set; }
+        public DbSet<EmployeePFDetail> EmployeePFDetails { get; set; }
+        public DbSet<EmployeeStateInsuranceDetail> EmployeeStateInsuranceDetails { get; set; }
+        public DbSet<EmployeeStateInsuranceFamilyDetail> EmployeeStateInsuranceFamilyDetails { get; set; }
     }
 }
