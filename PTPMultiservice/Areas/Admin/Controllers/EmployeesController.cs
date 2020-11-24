@@ -32,7 +32,11 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                     EducationQualifications = ManageDependancyData.GetEducationQualification(),
                     Designations = ManageDependancyData.GetDesignations(),
                     MaritalStatus = ManageDependancyData.GetMaritalStatus(),
-                    Genders = ManageDependancyData.GetGenders()
+                    Genders = ManageDependancyData.GetGenders(),
+                    EmployeeDocumentDetails = _context.EmployeeDocumentDetails.ToList(),
+                    EmployeeBankDetails = _context.EmployeeBankDetails.ToList(),
+                    EmployeePFDetails = _context.EmployeePFDetails.ToList(),
+                    EmployeeStateInsuranceDetails = _context.EmployeeStateInsuranceDetails.ToList()
                 };
 
                 return View(viewModel);
@@ -152,16 +156,39 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                 employeeInDb.mobile_no = viewModel.mobile_no;
                 employeeInDb.tel_no = viewModel.tel_no;
                 employeeInDb.mark_on_body = viewModel.mark_on_body;
+                
                 string pPhoto = string.Empty;
+                
                 if (viewModel.photo != null)
-                {
-                    pPhoto = viewModel.photo;
+                {                    
+                    if (Photo.ContentLength > 2000000)
+                    {
+                        ModelState.AddModelError("Photo", "Photo can't be more than 2Mb Size.");
+                        return View("EmployeeForm", viewModel);
+                    }
+
+                    string basePath = Server.MapPath("~");
+                    string folderPath = "Assets\\Upload\\";
+                    string folderFullPath = basePath + "" + folderPath;
+                    string fillName = string.Format(DateTime.Now.Day + "" + DateTime.Now.Month + "" + DateTime.Now.Year + "" + DateTime.Now.Hour + "" + DateTime.Now.Minute + "" + DateTime.Now.Second + "" + Path.GetExtension(Photo.FileName));
+
+                    if (!Directory.Exists(folderFullPath))
+                    {
+                        Directory.CreateDirectory(folderFullPath);
+                    }
+
+                    Bitmap bmpPostedImage = new System.Drawing.Bitmap(Photo.InputStream);
+                    var image = ScaleImage(bmpPostedImage, 320, null);
+
+                    image.Save(Path.Combine(folderFullPath, fillName));
+                    pPhoto = folderPath + "" + fillName;
                 }
                 else
                 {
                     pPhoto = employeeInDb.photo;
                 }
                 employeeInDb.photo = pPhoto;
+
                 employeeInDb.name_and_contact_reference_1 = viewModel.name_and_contact_reference_1;
                 employeeInDb.name_and_contact_reference_2 = viewModel.name_and_contact_reference_2;
 
@@ -323,5 +350,265 @@ namespace PTPMultiservice.Areas.Admin.Controllers
             return View("EmployeeForm", viewModel);
         }
         #endregion
+
+        #region Manage Employee Documnets Details
+        public ActionResult EmployeeDocumentsIndex(int employee_id)
+        {
+            try
+            {
+                List<EmployeeDocumentDetail> documents = _context.EmployeeDocumentDetails.Where(d => d.employee_id == employee_id).ToList();
+
+                EmployeeDocumentViewModel viewModel = new EmployeeDocumentViewModel
+                {
+                    DocTypes = ManageDependancyData.DocumentTypes(),
+                    EmployeeDocumentDetails = documents
+                };
+
+                Session["EmployeeId"] = employee_id;
+
+                var employee = _context.Employees.FirstOrDefault(p => p.employee_id == employee_id);
+                ViewBag.Title = "Manage Employee Documents For " + employee.first_name + " " + employee.middle_name + " " + employee.last_name;
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public ActionResult EmployeeDocumentsNew()
+        {
+            EmployeeDocumentFormViewModel viewModel = new EmployeeDocumentFormViewModel
+            {
+                DocTypes = ManageDependancyData.DocumentTypes(),
+                Title = "New Document"
+            };
+
+            return View("EmployeeDocumentForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EmployeeDocumentsSave(EmployeeDocumentFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("EmployeeDocumentForm", viewModel);
+            }
+
+            if (viewModel.document_id == 0)
+            {
+                EmployeeDocumentDetail document = new EmployeeDocumentDetail
+                {
+                    type = viewModel.type,
+                    name = viewModel.name,
+                    number = viewModel.number,
+                    birthdate = viewModel.birthdate,
+                    address = viewModel.address,
+                    employee_id = int.Parse(Session["EmployeeId"].ToString())
+                };
+
+                _context.EmployeeDocumentDetails.Add(document);
+                _context.SaveChanges();
+            }
+            else
+            {
+                EmployeeDocumentDetail documentInDb = _context.EmployeeDocumentDetails.Where(x => x.document_id == viewModel.document_id).FirstOrDefault();
+
+                if (documentInDb == null)
+                {
+                    ModelState.AddModelError("", "Bad request.");
+                    return View("EmployeeDocumentForm", viewModel);
+                }
+
+                documentInDb.type = viewModel.type;
+                documentInDb.name = viewModel.name;
+                documentInDb.number = viewModel.number;
+                documentInDb.birthdate = viewModel.birthdate;
+                documentInDb.address = viewModel.address;
+
+                _context.Entry(documentInDb).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("EmployeeDocumentsIndex",
+                new { employee_id = int.Parse(Session["EmployeeId"].ToString()) });
+        }
+
+        public ActionResult EmployeeDocumentsEdit(int id)
+        {
+            EmployeeDocumentDetail documentInDb = _context.EmployeeDocumentDetails.Where(x => x.document_id == id).FirstOrDefault();
+
+            if (documentInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("EmployeeDocumentForm", documentInDb);
+            }
+
+            EmployeeDocumentFormViewModel viewModel = new EmployeeDocumentFormViewModel
+            {
+                document_id = documentInDb.document_id,
+                type = documentInDb.type,
+                name = documentInDb.name,
+                number = documentInDb.number,
+                birthdate = documentInDb.birthdate,
+                address = documentInDb.address,
+                employee_id = int.Parse(Session["EmployeeId"].ToString()),
+                DocTypes = ManageDependancyData.DocumentTypes(),
+                Title = "Edit Document"
+            };
+
+            return View("EmployeeDocumentForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EmployeeDocumentsDelete(int id)
+        {
+            EmployeeDocumentDetail documentInDb = _context.EmployeeDocumentDetails.Where(x => x.document_id == id).FirstOrDefault();
+
+            if (documentInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("EmployeeDocumentForm", documentInDb);
+            }
+
+            _context.EmployeeDocumentDetails.Remove(documentInDb);
+            _context.SaveChanges();
+
+            return RedirectToAction("EmployeeDocumentsIndex",
+                new { employee_id = int.Parse(Session["EmployeeId"].ToString()) });
+        }
+        #endregion
+
+        #region Manage Employee Bank Details
+        public ActionResult EmployeeBankDetailsIndex(int employee_id)
+        {
+            try
+            {
+                List<EmployeeBankDetail> bankDetails = _context.EmployeeBankDetails.Where(d => d.employee_id == employee_id).ToList();
+
+                EmployeeBankDetailViewModel viewModel = new EmployeeBankDetailViewModel
+                {
+                    EmployeeBankDetails = bankDetails  
+                };
+
+                Session["EmployeeId"] = employee_id;
+
+                var employee = _context.Employees.FirstOrDefault(p => p.employee_id == employee_id);
+                ViewBag.Title = "Manage Bank Details For " + employee.first_name + " " + employee.middle_name + " " + employee.last_name;
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public ActionResult EmployeeBankDetailsNew()
+        {
+            EmployeeBankDetailFormViewModel viewModel = new EmployeeBankDetailFormViewModel
+            {
+                Title = "New Bank Detail"
+            };
+
+            return View("EmployeeBankDetailForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EmployeeBankDetailsSave(EmployeeBankDetailFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("EmployeeBankDetailForm", viewModel);
+            }
+
+            if (viewModel.bank_id == 0)
+            {
+                EmployeeBankDetail bankDetail = new EmployeeBankDetail
+                {
+                    account_no = viewModel.account_no,
+                    bank_holder_name = viewModel.bank_holder_name,
+                    bank_name = viewModel.bank_name,
+                    ifsc_code = viewModel.ifsc_code,
+                    branch_name = viewModel.branch_name,
+                    employee_id = int.Parse(Session["EmployeeId"].ToString())
+                };
+
+                _context.EmployeeBankDetails.Add(bankDetail);
+                _context.SaveChanges();
+            }
+            else
+            {
+                EmployeeBankDetail bankDetailsInDb = _context.EmployeeBankDetails.Where(x => x.bank_id == viewModel.bank_id).FirstOrDefault();
+
+                if (bankDetailsInDb == null)
+                {
+                    ModelState.AddModelError("", "Bad request.");
+                    return View("EmployeeBankDetailForm", viewModel);
+                }
+
+                bankDetailsInDb.account_no = viewModel.account_no;
+                bankDetailsInDb.bank_holder_name = viewModel.bank_holder_name;
+                bankDetailsInDb.bank_name = viewModel.bank_name;
+                bankDetailsInDb.ifsc_code = viewModel.ifsc_code;
+                bankDetailsInDb.branch_name = viewModel.branch_name;
+
+                _context.Entry(bankDetailsInDb).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("EmployeeBankDetailsIndex",
+                new { employee_id = int.Parse(Session["EmployeeId"].ToString()) });
+        }
+
+        public ActionResult EmployeeBankDetailsEdit(int id)
+        {
+            EmployeeBankDetail bankDetailsInDb = _context.EmployeeBankDetails.Where(x => x.bank_id == id).FirstOrDefault();
+
+            if (bankDetailsInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("EmployeeBankDetailForm", bankDetailsInDb);
+            }
+
+            EmployeeBankDetailFormViewModel viewModel = new EmployeeBankDetailFormViewModel
+            {
+                bank_id = bankDetailsInDb.bank_id,
+                account_no = bankDetailsInDb.account_no,
+                bank_holder_name = bankDetailsInDb.bank_holder_name,
+                bank_name = bankDetailsInDb.bank_name,
+                ifsc_code = bankDetailsInDb.ifsc_code,
+                branch_name = bankDetailsInDb.branch_name,
+                employee_id = int.Parse(Session["EmployeeId"].ToString()),
+                Title = "Edit Bank Details"
+            };
+
+            return View("EmployeeBankDetailForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EmployeeBankDetailsDelete(int id)
+        {
+            EmployeeBankDetail bankDetailsInDb = _context.EmployeeBankDetails.Where(x => x.bank_id == id).FirstOrDefault();
+
+            if (bankDetailsInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("EmployeeBankDetailForm", bankDetailsInDb);
+            }
+
+            _context.EmployeeBankDetails.Remove(bankDetailsInDb);
+            _context.SaveChanges();
+
+            return RedirectToAction("EmployeeBankDetailsIndex",
+                new { employee_id = int.Parse(Session["EmployeeId"].ToString()) });
+        }
+        #endregion
+
     }
 }

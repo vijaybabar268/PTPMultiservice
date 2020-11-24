@@ -23,13 +23,11 @@
                 <th>Sr</th>
                 <th>Name</th>
                 <th>Photo</th>
-                @*<th>Mobile No</th>
-                <th>Email</th>*@
                 <th>DOJ</th>
                 <th>Education</th>
                 <th>Designation</th>
                 <th>Status</th>
-                <th width="15%">Other Info</th>
+                <th width="17%">Other Info</th>
                 <th width="13%">Action</th>
             </tr>
         </thead>
@@ -39,50 +37,52 @@
                 {
                     <tr>
                         <td>@srNo</td>
-                        <td>@Html.ActionLink(string.Format("{0} {1} {2}", item.first_name, item.middle_name, item.last_name), "Details", new { id = item.employee_id }, new { @class = "btn btn-link", Title = "Click me for more information.", style= "padding-left: 0;" })
-                            <br /><span>@item.mobile_no</span>
-                            <br /><span>@item.email_address</span>
-                        </td>
                         <td>
-                            <div class="imageContainer">
-                                <img height="120" width="125" src="@Request.Url.GetLeftPart(UriPartial.Authority)//@item.photo" />
-                            </div>
-                        </td>
-                        <td>@string.Format("{0:dd-MM-yyyy}", item.joining_date)</td>
-                        <td>@Model.EducationQualifications.FirstOrDefault(x => x.Id == item.education_id).Name</td>
-                        <td>@Model.Designations.FirstOrDefault(x => x.Id == item.designation_id).Name</td>
-                        <td>
-                            @{
-                                if (item.is_active)
-                                {
-                                    <span class="badge badge-success">Active</span>
-                                }
-                                else
-                                {
-                                    <span class="badge badge-warning">In-Active</span>
-                                }
-                            }
-                        </td>
-                        <td class="remove-padding">
-                            @Html.ActionLink("Document Details", "EmployeeDocumentsIndex", "Employees", new { employee_id = item.employee_id }, new { @class = "btn btn-link" }) @*(@Model.Documents.Where(d => d.employee_id == item.employee_id).Count())*@ |
-                            @Html.ActionLink("Bank Details", "BankDetailsIndex", "Employees", new { employee_id = item.employee_id }, new { @class = "btn btn-link" }) @*(@Model.BankDetails.Where(d => d.partner_id == item.partner_id).Count())*@ |
-                            @Html.ActionLink("PF Details", "PFIndex", "Employees", new { employee_id = item.employee_id }, new { @class = "btn btn-link" }) @*(@Model.TermsConditions.Where(d => d.partner_id == item.partner_id).Count())*@
-                            @Html.ActionLink("State Insurance Details", "StateInsuranceDetailsIndex", "Employees", new { employee_id = item.employee_id }, new { @class = "btn btn-link" }) @*(@Model.TermsConditions.Where(d => d.partner_id == item.partner_id).Count())*@
-                        </td>
-                        <td class="remove-padding">
-                            @Html.ActionLink("Edit", "Edit", "Employees", new { id = item.employee_id }, new { @class = "btn btn-link" }) |
-                            @Html.ActionLink("Toggle Status", "ToggleStatus", "Employees", new { id = item.employee_id }, new { @class = "btn btn-link", onClick = "return confirm('Are you sure you want to perform this action?')" }) |
-
-                            @using (@Html.BeginForm("Delete", "Employees", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                            @Html.ActionLink(string.Format("{0} {1} {2}", item.first_name, item.middle_name, item.last_name), "Details", new { id = item.employee_id }, new { @class = "btn btn-link", Title = "Click me for more information.", style = "padding-left: 0;" })
+                        <br /><span>@item.mobile_no</span>
+                        <br /><span>@item.email_address</span>
+                    </td>
+                    <td>
+                        <div class="imageContainer">
+                            <img height="120" width="125" src="@Request.Url.GetLeftPart(UriPartial.Authority)//@item.photo" />
+                        </div>
+                    </td>
+                    <td>@string.Format("{0:dd-MM-yyyy}", item.joining_date)</td>
+                    <td>@Model.EducationQualifications.FirstOrDefault(x => x.Id == item.education_id).Name</td>
+                    <td>@Model.Designations.FirstOrDefault(x => x.Id == item.designation_id).Name</td>
+                    <td>
+                        @{
+                            if (item.is_active)
                             {
-                                @Html.AntiForgeryToken()
-                                @Html.Hidden("id", item.employee_id)
-                                <button type="submit" class="btn btn-link" style=" padding: 0;">Delete</button>
+                                <span class="badge badge-success">Active</span>
                             }
-                        </td>
-                    </tr>
-                    srNo++;
-                }
+                            else
+                            {
+                                <span class="badge badge-warning">In-Active</span>
+                            }
+                        }
+                    </td>
+                    <td class="remove-padding">
+                        @Html.ActionLink("Document Details", "EmployeeDocumentsIndex", "Employees", new { employee_id = item.employee_id }, new { @class = "btn btn-link" }) (@Model.EmployeeDocumentDetails.Where(d => d.employee_id == item.employee_id).Count()) |
+                        @Html.ActionLink("Bank Details", "EmployeeBankDetailsIndex", "Employees", new { employee_id = item.employee_id }, new { @class = "btn btn-link" }) (@Model.EmployeeBankDetails.Where(d => d.employee_id == item.employee_id).Count()) |
+                        @Html.ActionLink("PF Details", "PFIndex", "Employees", new { employee_id = item.employee_id }, new { @class = "btn btn-link" })
+                        (@Model.EmployeePFDetails.Where(d => d.employee_id == item.employee_id).Count())
+                        @Html.ActionLink("State Insurance Details", "StateInsuranceDetailsIndex", "Employees", new { employee_id = item.employee_id }, new { @class = "btn btn-link" }) (@Model.EmployeeStateInsuranceDetails.Where(d => d.employee_id == item.employee_id).Count())
+                    </td>
+                    <td class="remove-padding">
+                        @Html.ActionLink("Edit", "Edit", "Employees", new { id = item.employee_id }, new { @class = "btn btn-link" }) |
+                        @Html.ActionLink("Toggle Status", "ToggleStatus", "Employees", new { id = item.employee_id }, new { @class = "btn btn-link", onClick = "return confirm('Are you sure you want to perform this action?')" }) |
+
+                        @using (@Html.BeginForm("Delete", "Employees", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("id", item.employee_id)
+                            <button type="submit" class="btn btn-link" style=" padding: 0;">Delete</button>
+                        }
+                    </td>
+                </tr>
+                srNo++;
+            }
             }
         </tbody>
     </table>

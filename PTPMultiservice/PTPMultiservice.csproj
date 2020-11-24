@@ -245,6 +245,10 @@
     <Content Include="Areas\Admin\Views\Clients\ClientRelationForm.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\EmployeeForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Employees\EmployeeDocumentsIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Employees\EmployeeDocumentForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Employees\EmployeeBankDetailsIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Employees\EmployeeBankDetailForm.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

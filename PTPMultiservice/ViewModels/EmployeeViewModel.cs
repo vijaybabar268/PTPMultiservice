@@ -24,6 +24,10 @@ namespace PTPMultiservice.ViewModels
         public IEnumerable<Dropdown> MaritalStatus { get; set; }
         public IEnumerable<Dropdown> Genders { get; set; }
 
+        public IEnumerable<EmployeeDocumentDetail> EmployeeDocumentDetails { get; set; }
+        public IEnumerable<EmployeeBankDetail> EmployeeBankDetails { get; set; }
+        public IEnumerable<EmployeePFDetail> EmployeePFDetails { get; set; }
+        public IEnumerable<EmployeeStateInsuranceDetail> EmployeeStateInsuranceDetails { get; set; }
     }
 
     public class EmployeeFormViewModel
@@ -66,7 +70,7 @@ namespace PTPMultiservice.ViewModels
         [Display(Name = "Present Address")]
         public string present_address { get; set; }
 
-        [Display(Name = "Permanent Name")]
+        [Display(Name = "Permanent Address")]
         public string permanent_address { get; set; }
 
         [Display(Name = "Mobile No")]
@@ -97,5 +101,102 @@ namespace PTPMultiservice.ViewModels
         public IEnumerable<Dropdown> Designations { get; set; }
         public IEnumerable<Dropdown> MaritalStatus { get; set; }
         public IEnumerable<Dropdown> Genders { get; set; }
+    }
+
+    public class EmployeeDocumentViewModel
+    {
+        public string Title
+        {
+            get
+            {
+                return "Manage Employee Documents";
+            }
+        }
+
+        public IEnumerable<EmployeeDocumentDetail> EmployeeDocumentDetails { get; set; }
+        public IEnumerable<Dropdown> DocTypes { get; set; }
+    }
+
+    public class EmployeeDocumentFormViewModel
+    {
+        public int document_id { get; set; }
+
+        [Display(Name = "Document Type")]
+        public int type { get; set; }
+
+        [Display(Name = "Name")]
+        public string name { get; set; }
+
+        [Display(Name = "Number")]
+        public string number { get; set; }
+
+        [Display(Name = "Bithdate")]
+        public DateTime birthdate { get; set; }
+
+        [Display(Name = "Address")]
+        public string address { get; set; }
+
+        public int employee_id { get; set; }
+
+        public string Title { get; set; }
+
+        public IEnumerable<Dropdown> DocTypes { get; set; }
+    }
+
+    public class EmployeeBankDetailViewModel
+    {
+        public string Title
+        {
+            get
+            {
+                return "Manage Employee Bank Details";
+            }
+        }
+
+        public IEnumerable<EmployeeBankDetail> EmployeeBankDetails { get; set; }
+    }
+
+    public class EmployeeBankDetailFormViewModel
+    {
+        public int bank_id { get; set; }
+
+        [Display(Name = "Account No")]
+        public string account_no { get; set; }
+
+        [Display(Name = "Account Holder Name")]
+        public string bank_holder_name { get; set; }
+
+        [Display(Name = "Bank Name")]
+        public string bank_name { get; set; }
+
+        [Display(Name = "IFSC Code")]
+        public string ifsc_code { get; set; }
+
+        [Display(Name = "Branch Name")]
+        public string branch_name { get; set; }
+
+        public int employee_id { get; set; }
+
+        public string Title { get; set; }
+    }
+
+    public class EmployeePfDetailViewModel
+    {
+
+    }
+
+    public class EmployeePfDetailFormViewModel
+    {
+
+    }
+
+    public class EmployeeStateInsuranceDetailViewModel
+    {
+
+    }
+
+    public class EmployeeStateInsuranceFormViewModel
+    {
+
     }
 }
