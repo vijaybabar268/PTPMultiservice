@@ -32,9 +32,9 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                     Designations = ManageDependancyData.GetDesignations(),
                     MaritalStatus = ManageDependancyData.GetMaritalStatus(),
                     Genders = ManageDependancyData.GetGenders(),
-                    Documents = _context.Documents.ToList(),
-                    BankDetails = _context.BankDetails.ToList(),
-                    TermsConditions = _context.TermsConditions.ToList()
+                    PartnerDocuments = _context.PartnerDocuments.ToList(),
+                    PartnerBankDetails = _context.PartnerBankDetails.ToList(),
+                    PartnerTermsConditions = _context.PartnerTermsConditions.ToList()
                 };
 
                 return View(viewModel);
@@ -261,9 +261,9 @@ namespace PTPMultiservice.Areas.Admin.Controllers
         {
             try
             {
-                List<Document> documents = _context.Documents.Where(d => d.partner_id == partner_id).ToList();
+                List<PartnerDocument> documents = _context.PartnerDocuments.Where(d => d.partner_id == partner_id).ToList();
 
-                DocumentViewModel viewModel = new DocumentViewModel
+                PartnerDocumentViewModel viewModel = new PartnerDocumentViewModel
                 {
                     DocumentTypes = ManageDependancyData.DocumentTypes(),
                     Documents = documents
@@ -285,7 +285,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 
         public ActionResult PartnerDocumentsNew()
         {
-            DocumentFormViewModel viewModel = new DocumentFormViewModel
+            PartnerDocumentFormViewModel viewModel = new PartnerDocumentFormViewModel
             {
                 DocTypes = ManageDependancyData.DocumentTypes(),
                 Title = "New Document"
@@ -296,7 +296,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PartnerDocumentsSave(DocumentFormViewModel viewModel)
+        public ActionResult PartnerDocumentsSave(PartnerDocumentFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -305,7 +305,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 
             if (viewModel.document_id == 0)
             {
-                Document document = new Document
+                PartnerDocument document = new PartnerDocument
                 {
                     type = viewModel.type,
                     name = viewModel.name,
@@ -315,12 +315,12 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                     partner_id = int.Parse(Session["PartnerId"].ToString())
                 };
 
-                _context.Documents.Add(document);
+                _context.PartnerDocuments.Add(document);
                 _context.SaveChanges();
             }
             else
             {
-                Document documentInDb = _context.Documents.Where(x => x.document_id == viewModel.document_id).FirstOrDefault();
+                PartnerDocument documentInDb = _context.PartnerDocuments.Where(x => x.document_id == viewModel.document_id).FirstOrDefault();
 
                 if (documentInDb == null)
                 {
@@ -344,7 +344,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 
         public ActionResult PartnerDocumentsEdit(int id)
         {
-            Document documentInDb = _context.Documents.Where(x => x.document_id == id).FirstOrDefault();
+            PartnerDocument documentInDb = _context.PartnerDocuments.Where(x => x.document_id == id).FirstOrDefault();
 
             if (documentInDb == null)
             {
@@ -352,7 +352,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                 return View("DocumentForm", documentInDb);
             }
 
-            DocumentFormViewModel viewModel = new DocumentFormViewModel
+            PartnerDocumentFormViewModel viewModel = new PartnerDocumentFormViewModel
             {
                 document_id = documentInDb.document_id,
                 DocTypes = ManageDependancyData.DocumentTypes(),
@@ -372,7 +372,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult PartnerDocumentsDelete(int id)
         {
-            Document documentInDb = _context.Documents.Where(x => x.document_id == id).FirstOrDefault();
+            PartnerDocument documentInDb = _context.PartnerDocuments.Where(x => x.document_id == id).FirstOrDefault();
 
             if (documentInDb == null)
             {
@@ -380,7 +380,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                 return View("DocumentForm", documentInDb);
             }
 
-            _context.Documents.Remove(documentInDb);
+            _context.PartnerDocuments.Remove(documentInDb);
             _context.SaveChanges();
 
             return RedirectToAction("PartnerDocumentsIndex", 
@@ -394,9 +394,9 @@ namespace PTPMultiservice.Areas.Admin.Controllers
         {
             try
             {
-                List<BankDetail> bankDetails = _context.BankDetails.Where(d => d.partner_id == partner_id).ToList();
+                List<PartnerBankDetail> bankDetails = _context.PartnerBankDetails.Where(d => d.partner_id == partner_id).ToList();
 
-                BankDetailViewModel viewModel = new BankDetailViewModel
+                PartnerBankDetailViewModel viewModel = new PartnerBankDetailViewModel
                 {
                     bankDetails = bankDetails
                 };
@@ -417,7 +417,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 
         public ActionResult BankDetailsNew()
         {
-            BankDetailFormViewModel viewModel = new BankDetailFormViewModel
+            PartnerBankDetailFormViewModel viewModel = new PartnerBankDetailFormViewModel
             {
                 Title = "New Bank Detail"
             };
@@ -427,7 +427,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult BankDetailsSave(BankDetailFormViewModel viewModel)
+        public ActionResult BankDetailsSave(PartnerBankDetailFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -436,7 +436,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 
             if (viewModel.bank_id == 0)
             {
-                BankDetail bankDetail = new BankDetail
+                PartnerBankDetail bankDetail = new PartnerBankDetail
                 {
                     account_no = viewModel.account_no,
                     bank_holder_name = viewModel.bank_holder_name,
@@ -446,12 +446,12 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                     partner_id = int.Parse(Session["PartnerId"].ToString())
                 };
 
-                _context.BankDetails.Add(bankDetail);
+                _context.PartnerBankDetails.Add(bankDetail);
                 _context.SaveChanges();
             }
             else
             {
-                BankDetail bankDetailsInDb = _context.BankDetails.Where(x => x.bank_id == viewModel.bank_id).FirstOrDefault();
+                PartnerBankDetail bankDetailsInDb = _context.PartnerBankDetails.Where(x => x.bank_id == viewModel.bank_id).FirstOrDefault();
 
                 if (bankDetailsInDb == null)
                 {
@@ -475,7 +475,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 
         public ActionResult BankDetailsEdit(int id)
         {
-            BankDetail bankDetailsInDb = _context.BankDetails.Where(x => x.bank_id == id).FirstOrDefault();
+            PartnerBankDetail bankDetailsInDb = _context.PartnerBankDetails.Where(x => x.bank_id == id).FirstOrDefault();
 
             if (bankDetailsInDb == null)
             {
@@ -483,7 +483,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                 return View("BankDetailForm", bankDetailsInDb);
             }
 
-            BankDetailFormViewModel viewModel = new BankDetailFormViewModel
+            PartnerBankDetailFormViewModel viewModel = new PartnerBankDetailFormViewModel
             {
                 bank_id = bankDetailsInDb.bank_id,
                 account_no = bankDetailsInDb.account_no,
@@ -502,7 +502,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult BankDetailsDelete(int id)
         {
-            BankDetail bankDetailsInDb = _context.BankDetails.Where(x => x.bank_id == id).FirstOrDefault();
+            PartnerBankDetail bankDetailsInDb = _context.PartnerBankDetails.Where(x => x.bank_id == id).FirstOrDefault();
 
             if (bankDetailsInDb == null)
             {
@@ -510,7 +510,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                 return View("BankDetailForm", bankDetailsInDb);
             }
 
-            _context.BankDetails.Remove(bankDetailsInDb);
+            _context.PartnerBankDetails.Remove(bankDetailsInDb);
             _context.SaveChanges();
 
             return RedirectToAction("BankDetailsIndex",
@@ -524,9 +524,9 @@ namespace PTPMultiservice.Areas.Admin.Controllers
         {
             try
             {
-                List<TermsCondition> termsConditions = _context.TermsConditions.Where(d => d.partner_id == partner_id).ToList();
+                List<PartnerTermsCondition> termsConditions = _context.PartnerTermsConditions.Where(d => d.partner_id == partner_id).ToList();
 
-                TermsConditionViewModel viewModel = new TermsConditionViewModel
+                PartnerTermsConditionViewModel viewModel = new PartnerTermsConditionViewModel
                 {
                     TermsConditions = termsConditions
                 };
@@ -546,7 +546,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 
         public ActionResult TearmsConditionsNew()
         {
-            TermsConditionFormViewModel viewModel = new TermsConditionFormViewModel
+            PartnerTermsConditionFormViewModel viewModel = new PartnerTermsConditionFormViewModel
             {
                 Title = "New Tearms Condition"
             };
@@ -556,7 +556,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult TearmsConditionsSave(TermsConditionFormViewModel viewModel)
+        public ActionResult TearmsConditionsSave(PartnerTermsConditionFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -565,7 +565,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 
             if (viewModel.terms_condition_id == 0)
             {
-                TermsCondition termsCondition = new TermsCondition
+                PartnerTermsCondition termsCondition = new PartnerTermsCondition
                 {
                     pl_sharing_percent = viewModel.pl_sharing_percent,
                     monthly_incentives = viewModel.monthly_incentives,
@@ -576,12 +576,12 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                     partner_id = int.Parse(Session["PartnerId"].ToString())
                 };
 
-                _context.TermsConditions.Add(termsCondition);
+                _context.PartnerTermsConditions.Add(termsCondition);
                 _context.SaveChanges();
             }
             else
             {
-                TermsCondition termsConditionInDb = _context.TermsConditions.Where(x => x.terms_condition_id == viewModel.terms_condition_id).FirstOrDefault();
+                PartnerTermsCondition termsConditionInDb = _context.PartnerTermsConditions.Where(x => x.terms_condition_id == viewModel.terms_condition_id).FirstOrDefault();
 
                 if (termsConditionInDb == null)
                 {
@@ -606,7 +606,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 
         public ActionResult TearmsConditionsEdit(int id)
         {
-            TermsCondition termsConditionInDb = _context.TermsConditions.Where(x => x.terms_condition_id == id).FirstOrDefault();
+            PartnerTermsCondition termsConditionInDb = _context.PartnerTermsConditions.Where(x => x.terms_condition_id == id).FirstOrDefault();
 
             if (termsConditionInDb == null)
             {
@@ -614,7 +614,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                 return View("TearmsConditionForm", termsConditionInDb);
             }
 
-            TermsConditionFormViewModel viewModel = new TermsConditionFormViewModel
+            PartnerTermsConditionFormViewModel viewModel = new PartnerTermsConditionFormViewModel
             {
                 terms_condition_id = termsConditionInDb.terms_condition_id,
                 pl_sharing_percent = termsConditionInDb.pl_sharing_percent,
@@ -634,7 +634,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult TearmsConditionsDelete(int id)
         {
-            TermsCondition termsConditionInDb = _context.TermsConditions.Where(x => x.terms_condition_id == id).FirstOrDefault();
+            PartnerTermsCondition termsConditionInDb = _context.PartnerTermsConditions.Where(x => x.terms_condition_id == id).FirstOrDefault();
 
             if (termsConditionInDb == null)
             {
@@ -642,7 +642,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                 return View("TearmsConditionForm", termsConditionInDb);
             }
 
-            _context.TermsConditions.Remove(termsConditionInDb);
+            _context.PartnerTermsConditions.Remove(termsConditionInDb);
             _context.SaveChanges();
 
             return RedirectToAction("TearmsConditionsIndex",

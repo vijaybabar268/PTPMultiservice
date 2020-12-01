@@ -31,7 +31,7 @@ namespace PTPMultiservice.Models
     }
 
     [Table("document_master")]
-    public class Document
+    public class PartnerDocument
     {
         [Key]
         public int document_id { get; set; }
@@ -44,7 +44,7 @@ namespace PTPMultiservice.Models
     }
 
     [Table("bank_master")]
-    public class BankDetail
+    public class PartnerBankDetail
     {
         [Key]
         public int bank_id { get; set; }
@@ -57,7 +57,7 @@ namespace PTPMultiservice.Models
     }
 
     [Table("terms_condition_master")]
-    public class TermsCondition
+    public class PartnerTermsCondition
     {
         [Key]
         public int terms_condition_id { get; set; }

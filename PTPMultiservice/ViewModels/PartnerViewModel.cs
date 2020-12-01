@@ -24,9 +24,9 @@ namespace PTPMultiservice.ViewModels
         public IEnumerable<Dropdown> MaritalStatus { get; set; }
         public IEnumerable<Dropdown> Genders { get; set; }
 
-        public IEnumerable<Document> Documents { get; set; }
-        public IEnumerable<BankDetail> BankDetails { get; set; }
-        public IEnumerable<TermsCondition> TermsConditions { get; set; }
+        public IEnumerable<PartnerDocument> PartnerDocuments { get; set; }
+        public IEnumerable<PartnerBankDetail> PartnerBankDetails { get; set; }
+        public IEnumerable<PartnerTermsCondition> PartnerTermsConditions { get; set; }
     }
 
     public class PartnerFormViewModel
@@ -103,7 +103,7 @@ namespace PTPMultiservice.ViewModels
     }
 
 
-    public class DocumentViewModel
+    public class PartnerDocumentViewModel
     {
         public string Title
         {
@@ -113,11 +113,11 @@ namespace PTPMultiservice.ViewModels
             }
         }
 
-        public IEnumerable<Document> Documents { get; set; }
+        public IEnumerable<PartnerDocument> Documents { get; set; }
         public IEnumerable<Dropdown> DocumentTypes { get; set; }
     }
 
-    public class DocumentFormViewModel
+    public class PartnerDocumentFormViewModel
     {
         public int document_id { get; set; }
 
@@ -143,7 +143,7 @@ namespace PTPMultiservice.ViewModels
         public string Title { get; set; }
     }
 
-    public class BankDetailViewModel
+    public class PartnerBankDetailViewModel
     {
         public string Title
         {
@@ -153,10 +153,10 @@ namespace PTPMultiservice.ViewModels
             }
         }
 
-        public IEnumerable<BankDetail> bankDetails { get; set; }
+        public IEnumerable<PartnerBankDetail> bankDetails { get; set; }
     }
 
-    public class BankDetailFormViewModel
+    public class PartnerBankDetailFormViewModel
     {
         public int bank_id { get; set; }
 
@@ -181,7 +181,7 @@ namespace PTPMultiservice.ViewModels
     }
 
 
-    public class TermsConditionViewModel
+    public class PartnerTermsConditionViewModel
     {
         public string Title
         {
@@ -191,10 +191,10 @@ namespace PTPMultiservice.ViewModels
             }
         }
 
-        public IEnumerable<TermsCondition> TermsConditions { get; set; }
+        public IEnumerable<PartnerTermsCondition> TermsConditions { get; set; }
     }
 
-    public class TermsConditionFormViewModel
+    public class PartnerTermsConditionFormViewModel
     {
         public int terms_condition_id { get; set; }
         

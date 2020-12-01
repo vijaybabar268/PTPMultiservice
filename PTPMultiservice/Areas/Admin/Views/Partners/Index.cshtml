@@ -41,7 +41,7 @@
                         <td>@Html.ActionLink(string.Format("{0} {1} {2}", item.first_name, item.middle_name, item.last_name), "Details", new { id = item.partner_id }, new { @class = "btn btn-link", Title = "Click me for more information." })</td>
                         <td>@item.mobile</td>
                         <td>@item.email</td>
-                        <td>@string.Format("{0:dd-MM-yyyy}", item.joining_date)</td>                        
+                        <td>@string.Format("{0:dd MMM yyyy}", item.joining_date)</td>                        
                         <td>@Model.EducationQualifications.FirstOrDefault(x => x.Id == item.education_id).Name</td>
                         <td>@Model.Designations.FirstOrDefault(x => x.Id == item.designation_id).Name</td>                        
                         <td>
@@ -57,9 +57,9 @@
                             }
                         </td>
                         <td class="remove-padding">
-                            @Html.ActionLink("Document Details", "PartnerDocumentsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.Documents.Where(d => d.partner_id == item.partner_id).Count()) |
-                            @Html.ActionLink("Bank Details", "BankDetailsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.BankDetails.Where(d => d.partner_id == item.partner_id).Count()) |
-                            @Html.ActionLink("Tearms & Conditions", "TearmsConditionsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.TermsConditions.Where(d => d.partner_id == item.partner_id).Count())
+                            @Html.ActionLink("Document Details", "PartnerDocumentsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.PartnerDocuments.Where(d => d.partner_id == item.partner_id).Count()) |
+                            @Html.ActionLink("Bank Details", "BankDetailsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.PartnerBankDetails.Where(d => d.partner_id == item.partner_id).Count()) |
+                            @Html.ActionLink("Tearms & Conditions", "TearmsConditionsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.PartnerTermsConditions.Where(d => d.partner_id == item.partner_id).Count())
                         </td>
                         <td class="remove-padding"> 
                             @Html.ActionLink("Edit", "Edit", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" }) |
