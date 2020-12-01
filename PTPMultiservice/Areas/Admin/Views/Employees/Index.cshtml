@@ -47,7 +47,7 @@
                             <img height="120" width="125" src="@Request.Url.GetLeftPart(UriPartial.Authority)//@item.photo" />
                         </div>
                     </td>
-                    <td>@string.Format("{0:dd-MM-yyyy}", item.joining_date)</td>
+                    <td>@string.Format("{0:dd MMM yyyy}", item.joining_date)</td>
                     <td>@Model.EducationQualifications.FirstOrDefault(x => x.Id == item.education_id).Name</td>
                     <td>@Model.Designations.FirstOrDefault(x => x.Id == item.designation_id).Name</td>
                     <td>

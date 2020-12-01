@@ -13,7 +13,7 @@
 
 <h2 class="adminTitle text-center text-uppercase">@ViewBag.Title</h2>
 
-@Html.ActionLink("Add Document", "EmployeeDocumentsNew", "Employees", null, new { @class = "btn btn-primary add-btn" })
+@Html.ActionLink("Add Employee Document Detail", "EmployeeDocumentsNew", "Employees", null, new { @class = "btn btn-primary add-btn" })
 
 <div class="tableDiv">
     <table id="adminTbl" class="table table-bordered table-hover table-responsive table-striped">
@@ -37,7 +37,7 @@
                         <td>@Model.DocTypes.FirstOrDefault(x => x.Id == item.type).Name</td>
                         <td>@item.name</td>
                         <td>@item.number</td>
-                        <td>@string.Format("{0:dd-MM-yyyy}", item.birthdate)</td>
+                        <td>@string.Format("{0:dd MMM yyyy}", item.birthdate)</td>
                         <td>@item.address</td>
                         <td class="remove-padding">
                             @Html.ActionLink("Edit", "EmployeeDocumentsEdit", "Employees", new { id = item.document_id }, new { @class = "btn btn-link" }) |
