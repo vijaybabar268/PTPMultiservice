@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PTPMultiservice.Models
 {
-    [Table("partners")]
+    [Table("partner_master")]
     public class Partner
     {
         [Key]
@@ -30,7 +30,7 @@ namespace PTPMultiservice.Models
         public DateTime created_on { get; set; }
     }
 
-    [Table("document_master")]
+    [Table("partner_document_detail")]
     public class PartnerDocument
     {
         [Key]
@@ -43,7 +43,7 @@ namespace PTPMultiservice.Models
         public int partner_id { get; set; }
     }
 
-    [Table("bank_master")]
+    [Table("partner_bank_detail")]
     public class PartnerBankDetail
     {
         [Key]
@@ -56,7 +56,7 @@ namespace PTPMultiservice.Models
         public int partner_id { get; set; }
     }
 
-    [Table("terms_condition_master")]
+    [Table("partner_tearms_condition")]
     public class PartnerTermsCondition
     {
         [Key]

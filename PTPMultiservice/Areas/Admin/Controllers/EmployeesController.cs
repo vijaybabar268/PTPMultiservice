@@ -892,7 +892,8 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                 {
                     EmployeeStateInsuranceFamilyDetails = StateInsuranceFamilyDetails,
                     NomineeRelations = ManageDependancyData.GetBloodRelations(),
-                    YesNos = ManageDependancyData.YesNos()
+                    YesNos = ManageDependancyData.YesNos(),
+                    MinorMajor = ManageDependancyData.MinorMajor()
                 };
 
                 Session["EmpStateInsuranceId"] = emp_state_insurance_id;
@@ -915,7 +916,8 @@ namespace PTPMultiservice.Areas.Admin.Controllers
             {
                 Title = "New State Insurance Family Detail",
                 NomineeRelations = ManageDependancyData.GetBloodRelations(),
-                YesNos = ManageDependancyData.YesNos()
+                YesNos = ManageDependancyData.YesNos(),
+                MinorMajor = ManageDependancyData.MinorMajor()
             };
 
             return View("EmployeeStateInsuranceFamilyDetailForm", viewModel);
@@ -999,6 +1001,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                 emp_state_insurance_id = int.Parse(Session["EmpStateInsuranceId"].ToString()),
                 NomineeRelations = ManageDependancyData.GetBloodRelations(),
                 YesNos = ManageDependancyData.YesNos(),
+                MinorMajor = ManageDependancyData.MinorMajor(),
                 Title = "Edit State Insurance Family Details"
             };
 

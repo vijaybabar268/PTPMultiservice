@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PTPMultiservice.Models
 {
-    [Table("clients")]
+    [Table("client_master")]
     public class Client
     {
         [Key]
@@ -20,7 +20,7 @@ namespace PTPMultiservice.Models
         public bool is_active { get; set; }
     }
 
-    [Table("client_contact_details")]
+    [Table("client_contact_detail")]
     public class ClientContactDetail
     {
         [Key]
@@ -37,7 +37,7 @@ namespace PTPMultiservice.Models
         public int client_id { get; set; }
     }
 
-    [Table("client_relations")]
+    [Table("client_relation_detail")]
     public class ClientRelation
     {
         [Key]

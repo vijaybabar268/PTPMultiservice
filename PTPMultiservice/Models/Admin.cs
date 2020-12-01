@@ -7,7 +7,7 @@ using System.Web;
 
 namespace PTPMultiservice.Models
 {
-    [Table("admins")]
+    [Table("admin_master")]
     public class Admin
     {
         [Key]

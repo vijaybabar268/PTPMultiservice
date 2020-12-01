@@ -7,7 +7,7 @@ using System.Web;
 
 namespace PTPMultiservice.Models
 {
-    [Table("employees")]
+    [Table("employee_master")]
     public class Employee
     {
         [Key]
@@ -35,7 +35,7 @@ namespace PTPMultiservice.Models
         public bool is_active { get; set; }
     }
     
-    [Table("emp_document_details")]
+    [Table("employee_document_detail")]
     public class EmployeeDocumentDetail
     {
         [Key]
@@ -49,7 +49,7 @@ namespace PTPMultiservice.Models
         public int employee_id { get; set; }
     }
 
-    [Table("emp_bank_details")]
+    [Table("employee_bank_detail")]
     public class EmployeeBankDetail
     {
         [Key]
@@ -63,7 +63,7 @@ namespace PTPMultiservice.Models
         public int employee_id { get; set; }
     }
 
-    [Table("emp_pf_details")]
+    [Table("employee_pf_detail")]
     public class EmployeePfDetail
     {
         [Key]
@@ -76,7 +76,7 @@ namespace PTPMultiservice.Models
         public int employee_id { get; set; }
     }
 
-    [Table("emp_state_insurance_details")]
+    [Table("employee_state_insurance_detail")]
     public class EmployeeStateInsuranceDetail
     {
         [Key]
@@ -94,7 +94,7 @@ namespace PTPMultiservice.Models
         public int employee_id { get; set; }    
     }
 
-    [Table("emp_state_insurance_family_details")]
+    [Table("employee_state_insurance_family_detail")]
     public class EmployeeStateInsuranceFamilyDetail
     {
         [Key]

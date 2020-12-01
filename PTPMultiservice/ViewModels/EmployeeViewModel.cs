@@ -282,6 +282,7 @@ namespace PTPMultiservice.ViewModels
         public IEnumerable<EmployeeStateInsuranceFamilyDetail> EmployeeStateInsuranceFamilyDetails { get; set; }
         public IEnumerable<Dropdown> NomineeRelations { get; set; }
         public IEnumerable<Dropdown> YesNos { get; set; }
+        public IEnumerable<Dropdown> MinorMajor { get; set; }
     }
 
     public class EmployeeStateInsuranceFamilyDetailFormViewModel
@@ -318,5 +319,6 @@ namespace PTPMultiservice.ViewModels
 
         public IEnumerable<Dropdown> NomineeRelations { get; set; }
         public IEnumerable<Dropdown> YesNos { get; set; }
+        public IEnumerable<Dropdown> MinorMajor { get; set; }
     }
 }

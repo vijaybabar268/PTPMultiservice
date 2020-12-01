@@ -41,7 +41,7 @@
                         <td>@Model.NomineeRelations.FirstOrDefault(x => x.Id.ToString() == item.relation_with_ip).Name</td>
                         <td>@Model.YesNos.FirstOrDefault(x => x.Id.ToString() == item.minor_major_id).Name</td>
                         <td>@string.Format("{0:dd MMM yyyy}", item.birthdate)</td>
-                        <td>@Model.YesNos.FirstOrDefault(x => x.Id.ToString() == item.minor_major_id).Name</td>
+                        <td>@Model.MinorMajor.FirstOrDefault(x => x.Id.ToString() == item.minor_major_id).Name</td>
                         <td>@item.state</td>
                         <td>@item.district</td>
                         <td>@item.city</td>                        

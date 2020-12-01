@@ -28,6 +28,15 @@ namespace PTPMultiservice.Models
             };
         }
 
+        public static IEnumerable<Dropdown> MinorMajor()
+        {
+            return new List<Dropdown>()
+            {
+                new Dropdown {Id =1, Name = "MINOR"},
+                new Dropdown {Id =2, Name = "MAJOR"},
+            };
+        }
+
         public static IEnumerable<Dropdown> DocumentTypes()
         {
             return new List<Dropdown>()
@@ -192,7 +201,8 @@ namespace PTPMultiservice.Models
                 new Dropdown {Id =3, Name="Brother"},
                 new Dropdown {Id =4, Name="Sister"},
                 new Dropdown {Id =5, Name="Doughter"},
-                new Dropdown {Id =6, Name="Wife"}
+                new Dropdown {Id =6, Name="Wife"},
+                new Dropdown {Id =6, Name="Son"}
             };
         }
 
