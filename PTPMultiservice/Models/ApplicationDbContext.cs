@@ -36,5 +36,9 @@ namespace PTPMultiservice.Models
         public DbSet<EmployeePfDetail> EmployeePfDetails { get; set; }
         public DbSet<EmployeeStateInsuranceDetail> EmployeeStateInsuranceDetails { get; set; }
         public DbSet<EmployeeStateInsuranceFamilyDetail> EmployeeStateInsuranceFamilyDetails { get; set; }
+        
+        public DbSet<PartnerClientsMapping> PartnerClientsMapping { get; set; }
+
+
     }
 }

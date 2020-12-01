@@ -25,7 +25,7 @@ namespace PTPMultiservice.Models
         public string present_address { get; set; }
         public string permanent_address { get; set; }
         public string identity_body_mark { get; set; }
-        public string remarks { get; set; }        
+        public string remarks { get; set; }
         public bool is_active { get; set; }
         public DateTime created_on { get; set; }
     }
@@ -68,5 +68,16 @@ namespace PTPMultiservice.Models
         public int notice_period_in_days { get; set; }
         public string other_terms { get; set; }
         public int partner_id { get; set; }
+    }
+
+    [Table("partner_clients_mapping")]
+    public class PartnerClientsMapping
+    {
+        [Key]
+        public int partner_client_map_id { get; set; }
+        public int partner_id { get; set; }
+        public int client_id { get; set; }
+        public DateTime created_on { get; set; }
+        public bool is_active { get; set; }
     }
 }

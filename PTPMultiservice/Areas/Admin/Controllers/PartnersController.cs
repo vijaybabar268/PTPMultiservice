@@ -34,7 +34,8 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                     Genders = ManageDependancyData.GetGenders(),
                     PartnerDocuments = _context.PartnerDocuments.ToList(),
                     PartnerBankDetails = _context.PartnerBankDetails.ToList(),
-                    PartnerTermsConditions = _context.PartnerTermsConditions.ToList()
+                    PartnerTermsConditions = _context.PartnerTermsConditions.ToList(),
+                    MappedClients = _context.PartnerClientsMapping.ToList()
                 };
 
                 return View(viewModel);
@@ -649,5 +650,150 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                 new { partner_id = int.Parse(Session["PartnerId"].ToString()) });
         }
         #endregion
+
+        #region Map Clients to Partner
+        public ActionResult MapClientsToPartnerIndex(int partner_id)
+        {
+            try
+            {
+                List<PartnerClientsMapping> partnerClientsMappings = _context.PartnerClientsMapping.Where(d => d.partner_id == partner_id).ToList();
+
+                MapClientsToPartnerViewModel viewModel = new MapClientsToPartnerViewModel
+                {
+                    PartnerClientsMappings = partnerClientsMappings,
+                    Clients = _context.Clients.ToList()
+                };
+
+                Session["PartnerId"] = partner_id;
+
+                var partner = _context.Partners.FirstOrDefault(p => p.partner_id == partner_id);
+                ViewBag.Title = "Mapping Clients For " + partner.first_name + " " + partner.middle_name + " " + partner.last_name;
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public ActionResult MapClientsToPartnerNew()
+        {
+            MapClientsToPartnerFormViewModel viewModel = new MapClientsToPartnerFormViewModel
+            {
+                Title = "Map Client to Partmer",
+                Clients = _context.Clients.ToList()
+            };
+
+            return View("MapClientsToPartnerForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MapClientsToPartnerSave(MapClientsToPartnerFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("MapClientsToPartnerForm", viewModel);
+            }
+
+            if (viewModel.partner_client_map_id == 0)
+            {
+                PartnerClientsMapping partnerClientsMapping = new PartnerClientsMapping
+                {
+                    client_id = viewModel.client_id,
+                    created_on = DateTime.Now,
+                    is_active = true,                    
+                    partner_id = int.Parse(Session["PartnerId"].ToString())
+                };
+
+                _context.PartnerClientsMapping.Add(partnerClientsMapping);
+                _context.SaveChanges();
+            }
+            else
+            {
+                PartnerClientsMapping partnerClientsMappingInDb = _context.PartnerClientsMapping.Where(x => x.partner_client_map_id == viewModel.partner_client_map_id).FirstOrDefault();
+
+                if (partnerClientsMappingInDb == null)
+                {
+                    ModelState.AddModelError("", "Bad request.");
+                    return View("MapClientsToPartnerForm", viewModel);
+                }
+
+                partnerClientsMappingInDb.client_id = viewModel.client_id;
+
+                _context.Entry(partnerClientsMappingInDb).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("MapClientsToPartnerIndex",
+                new { partner_id = int.Parse(Session["PartnerId"].ToString()) });
+        }
+
+        public ActionResult MapClientsToPartnerEdit(int id)
+        {
+            PartnerClientsMapping partnerClientsMappingInDb = _context.PartnerClientsMapping.Where(x => x.partner_client_map_id == id).FirstOrDefault();
+
+            if (partnerClientsMappingInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("MapClientsToPartnerForm", partnerClientsMappingInDb);
+            }
+
+            MapClientsToPartnerFormViewModel viewModel = new MapClientsToPartnerFormViewModel
+            {
+                client_id = partnerClientsMappingInDb.client_id,
+                
+                partner_id = int.Parse(Session["PartnerId"].ToString()),
+                Title = "Tearms Condition Edit",
+                Clients = _context.Clients.ToList()
+            };
+
+            return View("MapClientsToPartnerForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MapClientsToPartnerDelete(int id)
+        {
+            PartnerClientsMapping partnerClientsMappingInDb = _context.PartnerClientsMapping.Where(x => x.partner_client_map_id == id).FirstOrDefault();
+
+            if (partnerClientsMappingInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("MapClientsToPartnerForm", partnerClientsMappingInDb);
+            }
+
+            _context.PartnerClientsMapping.Remove(partnerClientsMappingInDb);
+            _context.SaveChanges();
+
+            return RedirectToAction("MapClientsToPartnerIndex",
+                new { partner_id = int.Parse(Session["PartnerId"].ToString()) });
+        }
+
+        public ActionResult MapClientsToPartnerToggleStatus(int id)
+        {
+            PartnerClientsMapping partnerClientsMappingInDb = _context.PartnerClientsMapping.Where(x => x.partner_client_map_id == id).FirstOrDefault();
+
+            if (partnerClientsMappingInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("MapClientsToPartnerForm", partnerClientsMappingInDb);
+            }
+
+            if (partnerClientsMappingInDb.is_active)
+                partnerClientsMappingInDb.is_active = false;
+            else
+                partnerClientsMappingInDb.is_active = true;
+
+            _context.Entry(partnerClientsMappingInDb).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
+
+            return RedirectToAction("MapClientsToPartnerIndex",
+                new { partner_id = int.Parse(Session["PartnerId"].ToString()) });
+        }
+
+        #endregion
+
     }
 }

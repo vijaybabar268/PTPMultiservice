@@ -255,6 +255,8 @@
     <Content Include="Areas\Admin\Views\Employees\EmployeeStateInsuranceDetailForm.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\EmployeeStateInsuranceFamilyDetailsIndex.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\EmployeeStateInsuranceFamilyDetailForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Partners\MapClientsToPartnerIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Partners\MapClientsToPartnerForm.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

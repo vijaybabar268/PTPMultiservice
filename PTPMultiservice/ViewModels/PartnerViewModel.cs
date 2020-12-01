@@ -27,6 +27,7 @@ namespace PTPMultiservice.ViewModels
         public IEnumerable<PartnerDocument> PartnerDocuments { get; set; }
         public IEnumerable<PartnerBankDetail> PartnerBankDetails { get; set; }
         public IEnumerable<PartnerTermsCondition> PartnerTermsConditions { get; set; }
+        public IEnumerable<PartnerClientsMapping> MappedClients { get; set; }
     }
 
     public class PartnerFormViewModel
@@ -85,13 +86,13 @@ namespace PTPMultiservice.ViewModels
         public string remarks { get; set; }
 
         public int? document_id { get; set; }
-        
+
         public int? bank_id { get; set; }
-        
+
         public int? terms_condition_id { get; set; }
-        
+
         public bool is_active { get; set; }
-        
+
         public DateTime created_on { get; set; }
 
         public IEnumerable<Dropdown> EducationQualifications { get; set; }
@@ -197,7 +198,7 @@ namespace PTPMultiservice.ViewModels
     public class PartnerTermsConditionFormViewModel
     {
         public int terms_condition_id { get; set; }
-        
+
         [Display(Name = "PL Sharing Percent")]
         public float pl_sharing_percent { get; set; }
 
@@ -219,5 +220,34 @@ namespace PTPMultiservice.ViewModels
         public int partner_id { get; set; }
 
         public string Title { get; set; }
+    }
+
+    public class MapClientsToPartnerViewModel
+    {
+        public string Title
+        {
+            get
+            {
+                return "Map Clients to Partner";
+            }
+        }
+
+        public IEnumerable<PartnerClientsMapping> PartnerClientsMappings { get; set; }
+        public IEnumerable<Client> Clients { get; set; }
+    }
+
+    public class MapClientsToPartnerFormViewModel
+    {
+        public int partner_client_map_id { get; set; }
+        public int partner_id { get; set; }
+
+        [Display(Name = "Select Client")]
+        public int client_id { get; set; }
+        public DateTime created_on { get; set; }
+        public bool is_active { get; set; }
+
+        public string Title { get; set; }
+
+        public IEnumerable<Client> Clients { get; set; }
     }
 }

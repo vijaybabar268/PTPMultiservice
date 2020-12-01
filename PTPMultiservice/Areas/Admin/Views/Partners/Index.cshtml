@@ -28,7 +28,7 @@
                 <th>Education</th>
                 <th>Designation</th>
                 <th>Status</th>
-                <th width="15%">Other Info</th>
+                <th width="16%">Other Info</th>
                 <th width="13%">Action</th>
             </tr>
         </thead>
@@ -59,7 +59,9 @@
                         <td class="remove-padding">
                             @Html.ActionLink("Document Details", "PartnerDocumentsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.PartnerDocuments.Where(d => d.partner_id == item.partner_id).Count()) |
                             @Html.ActionLink("Bank Details", "BankDetailsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.PartnerBankDetails.Where(d => d.partner_id == item.partner_id).Count()) |
-                            @Html.ActionLink("Tearms & Conditions", "TearmsConditionsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.PartnerTermsConditions.Where(d => d.partner_id == item.partner_id).Count())
+                            @Html.ActionLink("Tearms & Conditions", "TearmsConditionsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.PartnerTermsConditions.Where(d => d.partner_id == item.partner_id).Count()) |
+                            @Html.ActionLink("Map Clients", "MapClientsToPartnerIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" })
+                              (@Model.MappedClients.Where(d => d.partner_id == item.partner_id).Count())
                         </td>
                         <td class="remove-padding"> 
                             @Html.ActionLink("Edit", "Edit", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" }) |
