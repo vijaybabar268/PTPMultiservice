@@ -249,6 +249,12 @@
     <Content Include="Areas\Admin\Views\Employees\EmployeeDocumentForm.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\EmployeeBankDetailsIndex.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\EmployeeBankDetailForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Employees\EmployeePfDetailsIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Employees\EmployeePfDetailForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Employees\EmployeeStateInsuranceDetailsIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Employees\EmployeeStateInsuranceDetailForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Employees\EmployeeStateInsuranceFamilyDetailsIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Employees\EmployeeStateInsuranceFamilyDetailForm.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

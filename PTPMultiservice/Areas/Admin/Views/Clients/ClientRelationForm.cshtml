@@ -20,7 +20,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.relation_name, new { @class = "col-sm-4 col-form-label" })
                     <div class="col-md-8">
-                        @Html.TextBoxFor(m => m.relation_name, new { @class = "form-control" })
+                        @Html.DropDownListFor(m => m.relation_name, new SelectList(Model.Relations, "Id", "Name"), "--Select--", new { @class = "form-control" })
                     </div>
                 </div>
             </div>

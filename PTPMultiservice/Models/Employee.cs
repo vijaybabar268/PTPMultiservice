@@ -64,7 +64,7 @@ namespace PTPMultiservice.Models
     }
 
     [Table("emp_pf_details")]
-    public class EmployeePFDetail
+    public class EmployeePfDetail
     {
         [Key]
         public int pf_id { get; set; }
@@ -103,7 +103,7 @@ namespace PTPMultiservice.Models
         public string relation_with_ip { get; set; }
         public string minor_major_id { get; set; }
         public DateTime birthdate { get; set; }
-        public bool is_residing_with_ip { get; set; }
+        public string is_residing_with_ip { get; set; }
         public string state { get; set; }
         public string district { get; set; }
         public string city { get; set; }

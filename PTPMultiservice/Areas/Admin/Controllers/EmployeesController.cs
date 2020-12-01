@@ -35,7 +35,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                     Genders = ManageDependancyData.GetGenders(),
                     EmployeeDocumentDetails = _context.EmployeeDocumentDetails.ToList(),
                     EmployeeBankDetails = _context.EmployeeBankDetails.ToList(),
-                    EmployeePFDetails = _context.EmployeePFDetails.ToList(),
+                    EmployeePFDetails = _context.EmployeePfDetails.ToList(),
                     EmployeeStateInsuranceDetails = _context.EmployeeStateInsuranceDetails.ToList()
                 };
 
@@ -607,6 +607,421 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 
             return RedirectToAction("EmployeeBankDetailsIndex",
                 new { employee_id = int.Parse(Session["EmployeeId"].ToString()) });
+        }
+        #endregion
+
+        #region Manage Employee PF Details
+        public ActionResult EmployeePfDetailsIndex(int employee_id)
+        {
+            try
+            {
+                List<EmployeePfDetail> PfDetails = _context.EmployeePfDetails.Where(d => d.employee_id == employee_id).ToList();
+
+                EmployeePfDetailViewModel viewModel = new EmployeePfDetailViewModel
+                {
+                    EmployeePfDetails = PfDetails
+                };
+
+                Session["EmployeeId"] = employee_id;
+
+                var employee = _context.Employees.FirstOrDefault(p => p.employee_id == employee_id);
+                ViewBag.Title = "Manage PF Details For " + employee.first_name + " " + employee.middle_name + " " + employee.last_name;
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public ActionResult EmployeePfDetailsNew()
+        {
+            EmployeePfDetailFormViewModel viewModel = new EmployeePfDetailFormViewModel
+            {
+                Title = "New PF Detail"
+            };
+
+            return View("EmployeePfDetailForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EmployeePfDetailsSave(EmployeePfDetailFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("EmployeePfDetailForm", viewModel);
+            }
+
+            if (viewModel.pf_id == 0)
+            {
+                EmployeePfDetail pfDetail = new EmployeePfDetail
+                {
+                    previous_uan_no = viewModel.previous_uan_no,
+                    previous_account_no = viewModel.previous_account_no,
+                    previous_doj_company = viewModel.previous_doj_company,
+                    previous_dol_company = viewModel.previous_dol_company,
+                    employee_id = int.Parse(Session["EmployeeId"].ToString())
+                };
+
+                _context.EmployeePfDetails.Add(pfDetail);
+                _context.SaveChanges();
+            }
+            else
+            {
+                EmployeePfDetail pfDetailsInDb = _context.EmployeePfDetails.Where(x => x.pf_id == viewModel.pf_id).FirstOrDefault();
+
+                if (pfDetailsInDb == null)
+                {
+                    ModelState.AddModelError("", "Bad request.");
+                    return View("EmployeePfDetailForm", viewModel);
+                }
+
+                pfDetailsInDb.previous_uan_no = viewModel.previous_uan_no;
+                pfDetailsInDb.previous_account_no = viewModel.previous_account_no;
+                pfDetailsInDb.previous_doj_company = viewModel.previous_doj_company;
+                pfDetailsInDb.previous_dol_company = viewModel.previous_dol_company;
+                _context.Entry(pfDetailsInDb).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("EmployeePfDetailsIndex",
+                new { employee_id = int.Parse(Session["EmployeeId"].ToString()) });
+        }
+
+        public ActionResult EmployeePfDetailsEdit(int id)
+        {
+            EmployeePfDetail pfDetailsInDb = _context.EmployeePfDetails.Where(x => x.pf_id == id).FirstOrDefault();
+
+            if (pfDetailsInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("EmployeePfDetailForm", pfDetailsInDb);
+            }
+
+            EmployeePfDetailFormViewModel viewModel = new EmployeePfDetailFormViewModel
+            {
+                pf_id = pfDetailsInDb.pf_id,
+                previous_uan_no = pfDetailsInDb.previous_uan_no,
+                previous_account_no = pfDetailsInDb.previous_account_no,
+                previous_doj_company = pfDetailsInDb.previous_doj_company,
+                previous_dol_company = pfDetailsInDb.previous_dol_company,
+                employee_id = int.Parse(Session["EmployeeId"].ToString()),
+                Title = "Edit PF Details"
+            };
+
+            return View("EmployeePFDetailForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EmployeePfDetailsDelete(int id)
+        {
+            EmployeePfDetail pfDetailsInDb = _context.EmployeePfDetails.Where(x => x.pf_id == id).FirstOrDefault();
+
+            if (pfDetailsInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("EmployeePfDetailForm", pfDetailsInDb);
+            }
+
+            _context.EmployeePfDetails.Remove(pfDetailsInDb);
+            _context.SaveChanges();
+
+            return RedirectToAction("EmployeePfDetailsIndex",
+                new { employee_id = int.Parse(Session["EmployeeId"].ToString()) });
+        }
+        #endregion
+
+        #region Manage Employee State Insurance Details
+        public ActionResult EmployeeStateInsuranceDetailsIndex(int employee_id)
+        {
+            try
+            {
+                List<EmployeeStateInsuranceDetail> StateInsuranceDetails = _context.EmployeeStateInsuranceDetails.Where(d => d.employee_id == employee_id).ToList();
+
+                EmployeeStateInsuranceDetailViewModel viewModel = new EmployeeStateInsuranceDetailViewModel
+                {
+                    EmployeeStateInsuranceDetails = StateInsuranceDetails,
+                    Disabilities = ManageDependancyData.GetDisability(),
+                    NomineeRelations = ManageDependancyData.GetBloodRelations(),
+                    EmployeeStateInsuranceFamilyDetails = _context.EmployeeStateInsuranceFamilyDetails.ToList()
+                };
+
+                Session["EmployeeId"] = employee_id;
+
+                var employee = _context.Employees.FirstOrDefault(p => p.employee_id == employee_id);
+                ViewBag.Title = "Manage State Insurance Details For " + employee.first_name + " " + employee.middle_name + " " + employee.last_name;
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public ActionResult EmployeeStateInsuranceDetailsNew()
+        {
+            EmployeeStateInsuranceDetailFormViewModel viewModel = new EmployeeStateInsuranceDetailFormViewModel
+            {
+                Title = "New State Insurance Detail",
+                Disabilities = ManageDependancyData.GetDisability(),
+                NomineeRelations = ManageDependancyData.GetBloodRelations()                
+            };
+
+            return View("EmployeeStateInsuranceDetailForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EmployeeStateInsuranceDetailsSave(EmployeeStateInsuranceDetailFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("EmployeeStateInsuranceDetailForm", viewModel);
+            }
+
+            if (viewModel.emp_state_insurance_id == 0)
+            {
+                EmployeeStateInsuranceDetail pfDetail = new EmployeeStateInsuranceDetail
+                {
+                    disability_id = viewModel.disability_id,
+                    previous_employer_code = viewModel.previous_employer_code,
+                    previous_employer_name = viewModel.previous_employer_name,
+                    previous_employer_address = viewModel.previous_employer_address,
+                    previous_ip_no = viewModel.previous_ip_no,
+                    nominee_name = viewModel.nominee_name,
+                    nominee_address = viewModel.nominee_address,
+                    relation_with_nominee_id = viewModel.relation_with_nominee_id,
+                    per_share_towards_nominee = viewModel.per_share_towards_nominee,
+                    employee_id = int.Parse(Session["EmployeeId"].ToString())
+                };
+
+                _context.EmployeeStateInsuranceDetails.Add(pfDetail);
+                _context.SaveChanges();
+            }
+            else
+            {
+                EmployeeStateInsuranceDetail stateInsuranceDetailsInDb = _context.EmployeeStateInsuranceDetails.Where(x => x.emp_state_insurance_id == viewModel.emp_state_insurance_id).FirstOrDefault();
+
+                if (stateInsuranceDetailsInDb == null)
+                {
+                    ModelState.AddModelError("", "Bad request.");
+                    return View("EmployeeStateInsuranceDetailForm", viewModel);
+                }
+                                
+                stateInsuranceDetailsInDb.disability_id = viewModel.disability_id;
+                stateInsuranceDetailsInDb.previous_employer_code = viewModel.previous_employer_code;
+                stateInsuranceDetailsInDb.previous_employer_name = viewModel.previous_employer_name;
+                stateInsuranceDetailsInDb.previous_employer_address = viewModel.previous_employer_address;
+                stateInsuranceDetailsInDb.previous_ip_no = viewModel.previous_ip_no;
+                stateInsuranceDetailsInDb.nominee_name = viewModel.nominee_name;
+                stateInsuranceDetailsInDb.nominee_address = viewModel.nominee_address;
+                stateInsuranceDetailsInDb.relation_with_nominee_id = viewModel.relation_with_nominee_id;
+                stateInsuranceDetailsInDb.per_share_towards_nominee = viewModel.per_share_towards_nominee;
+
+                _context.Entry(stateInsuranceDetailsInDb).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("EmployeeStateInsuranceDetailsIndex",
+                new { employee_id = int.Parse(Session["EmployeeId"].ToString()) });
+        }
+
+        public ActionResult EmployeeStateInsuranceDetailsEdit(int id)
+        {
+            EmployeeStateInsuranceDetail stateInsuranceDetailsInDb = _context.EmployeeStateInsuranceDetails.Where(x => x.emp_state_insurance_id == id).FirstOrDefault();
+
+            if (stateInsuranceDetailsInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("EmployeeStateInsuranceDetailForm", stateInsuranceDetailsInDb);
+            }
+
+            EmployeeStateInsuranceDetailFormViewModel viewModel = new EmployeeStateInsuranceDetailFormViewModel
+            {
+                emp_state_insurance_id = stateInsuranceDetailsInDb.emp_state_insurance_id,
+                disability_id = stateInsuranceDetailsInDb.disability_id,
+                previous_employer_code = stateInsuranceDetailsInDb.previous_employer_code,
+                previous_employer_name = stateInsuranceDetailsInDb.previous_employer_name,
+                previous_employer_address = stateInsuranceDetailsInDb.previous_employer_address,
+                previous_ip_no = stateInsuranceDetailsInDb.previous_ip_no,
+                nominee_name = stateInsuranceDetailsInDb.nominee_name,
+                nominee_address = stateInsuranceDetailsInDb.nominee_address,
+                relation_with_nominee_id = stateInsuranceDetailsInDb.relation_with_nominee_id,
+                per_share_towards_nominee = stateInsuranceDetailsInDb.per_share_towards_nominee,
+                employee_id = int.Parse(Session["EmployeeId"].ToString()),
+                Disabilities = ManageDependancyData.GetDisability(),
+                NomineeRelations = ManageDependancyData.GetBloodRelations(),
+                Title = "Edit State Insurance Details"
+            };
+
+            return View("EmployeeStateInsuranceDetailForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EmployeeStateInsuranceDetailsDelete(int id)
+        {
+            EmployeeStateInsuranceDetail stateInsuranceDetailsInDb = _context.EmployeeStateInsuranceDetails.Where(x => x.emp_state_insurance_id == id).FirstOrDefault();
+
+            if (stateInsuranceDetailsInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("EmployeeStateInsuranceDetailForm", stateInsuranceDetailsInDb);
+            }
+
+            _context.EmployeeStateInsuranceDetails.Remove(stateInsuranceDetailsInDb);
+            _context.SaveChanges();
+
+            return RedirectToAction("EmployeeStateInsuranceDetailsIndex",
+                new { employee_id = int.Parse(Session["EmployeeId"].ToString()) });
+        }
+        #endregion
+
+        #region Manage Employee State Insurance Family Details
+        public ActionResult EmployeeStateInsuranceFamilyDetailsIndex(int emp_state_insurance_id)
+        {
+            try
+            {
+                List<EmployeeStateInsuranceFamilyDetail> StateInsuranceFamilyDetails = _context.EmployeeStateInsuranceFamilyDetails.Where(d => d.emp_state_insurance_id == emp_state_insurance_id).ToList();
+
+                EmployeeStateInsuranceFamilyDetailViewModel viewModel = new EmployeeStateInsuranceFamilyDetailViewModel
+                {
+                    EmployeeStateInsuranceFamilyDetails = StateInsuranceFamilyDetails,
+                    NomineeRelations = ManageDependancyData.GetBloodRelations(),
+                    YesNos = ManageDependancyData.YesNos()
+                };
+
+                Session["EmpStateInsuranceId"] = emp_state_insurance_id;
+
+                var ip = _context.EmployeeStateInsuranceDetails.FirstOrDefault(p => p.emp_state_insurance_id == emp_state_insurance_id);
+                var employee = _context.Employees.FirstOrDefault(p => p.employee_id == ip.employee_id);
+                ViewBag.Title = "Manage Family Details For " + employee.first_name + " " + employee.middle_name + " " + employee.last_name;
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public ActionResult EmployeeStateInsuranceFamilyDetailsNew()
+        {
+            EmployeeStateInsuranceFamilyDetailFormViewModel viewModel = new EmployeeStateInsuranceFamilyDetailFormViewModel
+            {
+                Title = "New State Insurance Family Detail",
+                NomineeRelations = ManageDependancyData.GetBloodRelations(),
+                YesNos = ManageDependancyData.YesNos()
+            };
+
+            return View("EmployeeStateInsuranceFamilyDetailForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EmployeeStateInsuranceFamilyDetailsSave(EmployeeStateInsuranceFamilyDetailFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("EmployeeStateInsuranceFamilyDetailForm", viewModel);
+            }
+
+            if (viewModel.emp_state_insu_fam_id == 0)
+            {
+                EmployeeStateInsuranceFamilyDetail familyDetail = new EmployeeStateInsuranceFamilyDetail
+                {
+                    full_name = viewModel.full_name,
+                    relation_with_ip = viewModel.relation_with_ip,
+                    minor_major_id = viewModel.minor_major_id,
+                    birthdate = viewModel.birthdate,
+                    is_residing_with_ip = viewModel.is_residing_with_ip,
+                    state = viewModel.state,
+                    district = viewModel.district,
+                    city = viewModel.city,                    
+                    emp_state_insurance_id = int.Parse(Session["EmpStateInsuranceId"].ToString())
+                };
+
+                _context.EmployeeStateInsuranceFamilyDetails.Add(familyDetail);
+                _context.SaveChanges();
+            }
+            else
+            {
+                EmployeeStateInsuranceFamilyDetail stateInsuranceFamilyDetailsInDb = _context.EmployeeStateInsuranceFamilyDetails.Where(x => x.emp_state_insu_fam_id == viewModel.emp_state_insu_fam_id).FirstOrDefault();
+
+                if (stateInsuranceFamilyDetailsInDb == null)
+                {
+                    ModelState.AddModelError("", "Bad request.");
+                    return View("EmployeeStateInsuranceFamilyDetailForm", viewModel);
+                }
+
+                stateInsuranceFamilyDetailsInDb.full_name = viewModel.full_name;
+                stateInsuranceFamilyDetailsInDb.relation_with_ip = viewModel.relation_with_ip;
+                stateInsuranceFamilyDetailsInDb.minor_major_id = viewModel.minor_major_id;
+                stateInsuranceFamilyDetailsInDb.birthdate = viewModel.birthdate;
+                stateInsuranceFamilyDetailsInDb.is_residing_with_ip = viewModel.is_residing_with_ip;
+                stateInsuranceFamilyDetailsInDb.state = viewModel.state;
+                stateInsuranceFamilyDetailsInDb.district = viewModel.district;
+                stateInsuranceFamilyDetailsInDb.city = viewModel.city;
+
+                _context.Entry(stateInsuranceFamilyDetailsInDb).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("EmployeeStateInsuranceFamilyDetailsIndex",
+                new { emp_state_insurance_id = int.Parse(Session["EmpStateInsuranceId"].ToString()) });
+        }
+
+        public ActionResult EmployeeStateInsuranceFamilyDetailsEdit(int id)
+        {
+            EmployeeStateInsuranceFamilyDetail stateInsuranceFamilyDetailsInDb = _context.EmployeeStateInsuranceFamilyDetails.Where(x => x.emp_state_insu_fam_id == id).FirstOrDefault();
+
+            if (stateInsuranceFamilyDetailsInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("EmployeeStateInsuranceFamilyDetailForm", stateInsuranceFamilyDetailsInDb);
+            }
+
+            EmployeeStateInsuranceFamilyDetailFormViewModel viewModel = new EmployeeStateInsuranceFamilyDetailFormViewModel
+            {
+                emp_state_insu_fam_id = stateInsuranceFamilyDetailsInDb.emp_state_insu_fam_id,
+                full_name = stateInsuranceFamilyDetailsInDb.full_name,
+                relation_with_ip = stateInsuranceFamilyDetailsInDb.relation_with_ip,
+                minor_major_id = stateInsuranceFamilyDetailsInDb.minor_major_id,
+                birthdate = stateInsuranceFamilyDetailsInDb.birthdate,
+                is_residing_with_ip = stateInsuranceFamilyDetailsInDb.is_residing_with_ip,
+                state = stateInsuranceFamilyDetailsInDb.state,
+                district = stateInsuranceFamilyDetailsInDb.district,
+                city = stateInsuranceFamilyDetailsInDb.city,
+                emp_state_insurance_id = int.Parse(Session["EmpStateInsuranceId"].ToString()),
+                NomineeRelations = ManageDependancyData.GetBloodRelations(),
+                YesNos = ManageDependancyData.YesNos(),
+                Title = "Edit State Insurance Family Details"
+            };
+
+            return View("EmployeeStateInsuranceFamilyDetailForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EmployeeStateInsuranceFamilyDetailsDelete(int id)
+        {
+            EmployeeStateInsuranceFamilyDetail stateInsuranceFamilyDetailsInDb = _context.EmployeeStateInsuranceFamilyDetails.Where(x => x.emp_state_insu_fam_id == id).FirstOrDefault();
+
+            if (stateInsuranceFamilyDetailsInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("EmployeeStateInsuranceFamilyDetailForm", stateInsuranceFamilyDetailsInDb);
+            }
+
+            _context.EmployeeStateInsuranceFamilyDetails.Remove(stateInsuranceFamilyDetailsInDb);
+            _context.SaveChanges();
+
+            return RedirectToAction("EmployeeStateInsuranceFamilyDetailsIndex",
+                new { emp_state_insurance_id = int.Parse(Session["EmpStateInsuranceId"].ToString()) });
         }
         #endregion
 

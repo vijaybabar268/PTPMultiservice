@@ -19,6 +19,15 @@ namespace PTPMultiservice.Models
             public string Name { get; set; }
         }
 
+        public static IEnumerable<Dropdown> YesNos()
+        {
+            return new List<Dropdown>()
+            {
+                new Dropdown {Id =1, Name = "Yes"},
+                new Dropdown {Id =2, Name = "No"},
+            };
+        }
+
         public static IEnumerable<Dropdown> DocumentTypes()
         {
             return new List<Dropdown>()
@@ -167,9 +176,10 @@ namespace PTPMultiservice.Models
         {
             return new List<Dropdown>()
             {
-                new Dropdown {Id =1, Name="Vision Impairment"},
+                new Dropdown {Id =1, Name="NA"},
                 new Dropdown {Id =2, Name="Hard of Hearing"},
-                new Dropdown {Id =3, Name="Physical Disability"}
+                new Dropdown {Id =3, Name="Physical Disability"},
+                new Dropdown {Id =3, Name="Vision Impairment"}
             };
         }
 
@@ -181,7 +191,8 @@ namespace PTPMultiservice.Models
                 new Dropdown {Id =2, Name="Father"},
                 new Dropdown {Id =3, Name="Brother"},
                 new Dropdown {Id =4, Name="Sister"},
-                new Dropdown {Id =5, Name="Doughter"}
+                new Dropdown {Id =5, Name="Doughter"},
+                new Dropdown {Id =6, Name="Wife"}
             };
         }
 

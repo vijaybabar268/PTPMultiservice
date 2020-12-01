@@ -26,7 +26,7 @@ namespace PTPMultiservice.ViewModels
 
         public IEnumerable<EmployeeDocumentDetail> EmployeeDocumentDetails { get; set; }
         public IEnumerable<EmployeeBankDetail> EmployeeBankDetails { get; set; }
-        public IEnumerable<EmployeePFDetail> EmployeePFDetails { get; set; }
+        public IEnumerable<EmployeePfDetail> EmployeePFDetails { get; set; }
         public IEnumerable<EmployeeStateInsuranceDetail> EmployeeStateInsuranceDetails { get; set; }
     }
 
@@ -182,21 +182,141 @@ namespace PTPMultiservice.ViewModels
 
     public class EmployeePfDetailViewModel
     {
+        public string Title
+        {
+            get
+            {
+                return "Manage Employee PF Details";
+            }
+        }
 
+        public IEnumerable<EmployeePfDetail> EmployeePfDetails { get; set; }
     }
 
     public class EmployeePfDetailFormViewModel
     {
+        public int pf_id { get; set; }
 
+        [Display(Name = "Previous UAN No")]
+        public string previous_uan_no { get; set; }
+
+        [Display(Name = "Previous Account No")]
+        public string previous_account_no { get; set; }
+
+        [Display(Name = "Previous Company DOJ")]
+        public DateTime previous_doj_company { get; set; }
+
+        [Display(Name = "Previous Company DOL")]
+        public DateTime previous_dol_company { get; set; }
+
+        public int employee_id { get; set; }
+
+        public string Title { get; set; }
     }
 
     public class EmployeeStateInsuranceDetailViewModel
     {
+        public string Title
+        {
+            get
+            {
+                return "Manage Employee State Insurance Details";
+            }
+        }
 
+        public IEnumerable<EmployeeStateInsuranceDetail> EmployeeStateInsuranceDetails { get; set; }
+        public IEnumerable<EmployeeStateInsuranceFamilyDetail> EmployeeStateInsuranceFamilyDetails { get; set; }
+        public IEnumerable<Dropdown> Disabilities { get; set; }
+        public IEnumerable<Dropdown> NomineeRelations { get; set; }
     }
 
-    public class EmployeeStateInsuranceFormViewModel
+    public class EmployeeStateInsuranceDetailFormViewModel
     {
+        public int emp_state_insurance_id { get; set; }
 
+        [Display(Name = "Disability")]
+        public int disability_id { get; set; }
+
+        [Display(Name = "Previous Employer Code")]
+        public string previous_employer_code { get; set; }
+
+        [Display(Name = "Previous Employer Name")]
+        public string previous_employer_name { get; set; }
+
+        [Display(Name = "Previous Employer Address")]
+        public string previous_employer_address { get; set; }
+
+        [Display(Name = "Previous IP No")]
+        public string previous_ip_no { get; set; }
+
+        [Display(Name = "Nominee Name")]
+        public string nominee_name { get; set; }
+
+        [Display(Name = "Nominee Address")]
+        public string nominee_address { get; set; }
+
+        [Display(Name = "Nominee Relation")]
+        public int relation_with_nominee_id { get; set; }
+
+        [Display(Name = "Sharing Percent Nominee")]
+        public float per_share_towards_nominee { get; set; }
+
+        public int employee_id { get; set; }
+
+        public string Title { get; set; }
+
+        public IEnumerable<Dropdown> Disabilities { get; set; }
+        public IEnumerable<Dropdown> NomineeRelations { get; set; }
+    }
+
+    public class EmployeeStateInsuranceFamilyDetailViewModel
+    {
+        public string Title
+        {
+            get
+            {
+                return "Manage Employee State Insurance Family Details";
+            }
+        }
+
+        public IEnumerable<EmployeeStateInsuranceFamilyDetail> EmployeeStateInsuranceFamilyDetails { get; set; }
+        public IEnumerable<Dropdown> NomineeRelations { get; set; }
+        public IEnumerable<Dropdown> YesNos { get; set; }
+    }
+
+    public class EmployeeStateInsuranceFamilyDetailFormViewModel
+    {
+        public int emp_state_insu_fam_id { get; set; }
+
+        [Display(Name = "Full Name")]
+        public string full_name { get; set; }
+
+        [Display(Name = "Relation with IP")]
+        public string relation_with_ip { get; set; }
+
+        [Display(Name = "Minor/Major")]
+        public string minor_major_id { get; set; }
+
+        [Display(Name = "Birthdate")]
+        public DateTime birthdate { get; set; }
+
+        [Display(Name = "Is Residing with IP")]
+        public string is_residing_with_ip { get; set; }
+
+        [Display(Name = "State")]
+        public string state { get; set; }
+
+        [Display(Name = "District")]
+        public string district { get; set; }
+
+        [Display(Name = "City")]
+        public string city { get; set; }
+
+        public int emp_state_insurance_id { get; set; }
+
+        public string Title { get; set; }
+
+        public IEnumerable<Dropdown> NomineeRelations { get; set; }
+        public IEnumerable<Dropdown> YesNos { get; set; }
     }
 }

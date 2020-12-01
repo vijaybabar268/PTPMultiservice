@@ -65,9 +65,9 @@
                     <td class="remove-padding">
                         @Html.ActionLink("Document Details", "EmployeeDocumentsIndex", "Employees", new { employee_id = item.employee_id }, new { @class = "btn btn-link" }) (@Model.EmployeeDocumentDetails.Where(d => d.employee_id == item.employee_id).Count()) |
                         @Html.ActionLink("Bank Details", "EmployeeBankDetailsIndex", "Employees", new { employee_id = item.employee_id }, new { @class = "btn btn-link" }) (@Model.EmployeeBankDetails.Where(d => d.employee_id == item.employee_id).Count()) |
-                        @Html.ActionLink("PF Details", "PFIndex", "Employees", new { employee_id = item.employee_id }, new { @class = "btn btn-link" })
+                        @Html.ActionLink("PF Details", "EmployeePfDetailsIndex", "Employees", new { employee_id = item.employee_id }, new { @class = "btn btn-link" })
                         (@Model.EmployeePFDetails.Where(d => d.employee_id == item.employee_id).Count())
-                        @Html.ActionLink("State Insurance Details", "StateInsuranceDetailsIndex", "Employees", new { employee_id = item.employee_id }, new { @class = "btn btn-link" }) (@Model.EmployeeStateInsuranceDetails.Where(d => d.employee_id == item.employee_id).Count())
+                        @Html.ActionLink("State Insurance Details", "EmployeeStateInsuranceDetailsIndex", "Employees", new { employee_id = item.employee_id }, new { @class = "btn btn-link" }) (@Model.EmployeeStateInsuranceDetails.Where(d => d.employee_id == item.employee_id).Count())
                     </td>
                     <td class="remove-padding">
                         @Html.ActionLink("Edit", "Edit", "Employees", new { id = item.employee_id }, new { @class = "btn btn-link" }) |

@@ -127,6 +127,7 @@ namespace PTPMultiservice.ViewModels
         }
 
         public IEnumerable<ClientRelation> ClientRelations { get; set; }
+        public IEnumerable<Dropdown> Relations { get; set; }
     }
 
     public class ClientRelationFormViewModel
@@ -142,5 +143,7 @@ namespace PTPMultiservice.ViewModels
         public int client_id { get; set; }
 
         public string Title { get; set; }
+
+        public IEnumerable<Dropdown> Relations { get; set; }
     }
 }

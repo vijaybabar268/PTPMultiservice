@@ -1,0 +1,66 @@
+﻿@model PTPMultiservice.ViewModels.EmployeeStateInsuranceFamilyDetailViewModel
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int srNo = 1;
+}
+
+<style>
+    .remove-padding a {
+        padding: 0;
+    }
+</style>
+
+<h2 class="adminTitle text-center text-uppercase">@ViewBag.Title</h2>
+
+@Html.ActionLink("Add State Insurance Family Detail", "EmployeeStateInsuranceFamilyDetailsNew", "Employees", null, new { @class = "btn btn-primary add-btn" })
+
+<div class="tableDiv">
+    <table id="adminTbl" class="table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Sr</th>
+                <th>Full Name</th>
+                <th>Relation with IP</th>
+                <th>Monor/Major</th>
+                <th>Birthdate</th>
+                <th>Is Residing with IP</th>
+                <th>State</th>
+                <th>Country</th>
+                <th>City</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.EmployeeStateInsuranceFamilyDetails)
+                {
+                    <tr>
+                        <td>@srNo</td>
+                        <td>@item.full_name</td>
+                        <td>@Model.NomineeRelations.FirstOrDefault(x => x.Id.ToString() == item.relation_with_ip).Name</td>
+                        <td>@Model.YesNos.FirstOrDefault(x => x.Id.ToString() == item.minor_major_id).Name</td>
+                        <td>@item.birthdate</td>
+                        <td>@Model.YesNos.FirstOrDefault(x => x.Id.ToString() == item.minor_major_id).Name</td>
+                        <td>@item.state</td>
+                        <td>@item.district</td>
+                        <td>@item.city</td>                        
+                        <td class="remove-padding">
+                            @Html.ActionLink("Edit", "EmployeeStateInsuranceFamilyDetailsEdit", "Employees", new { id = item.emp_state_insu_fam_id }, new { @class = "btn btn-link" }) |
+
+                            @using (@Html.BeginForm("EmployeeStateInsuranceFamilyDetailsDelete", "Employees", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", item.emp_state_insu_fam_id)
+                                <button type="submit" class="btn btn-link" style=" padding: 0;">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                    srNo++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@Html.ActionLink("Back to List", "EmployeeStateInsuranceDetailsIndex", "Employees", new { employee_id = int.Parse(Session["EmpStateInsuranceId"].ToString()) }, new { @class = "btn btn-link add-btn" })

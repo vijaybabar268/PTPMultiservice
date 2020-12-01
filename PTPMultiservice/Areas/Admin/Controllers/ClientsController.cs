@@ -362,7 +362,8 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 
                 ClientRelationViewModel viewModel = new ClientRelationViewModel
                 {
-                    ClientRelations = clientRelations
+                    ClientRelations = clientRelations,
+                    Relations = ManageDependancyData.GetRelations()
                 };
 
                 Session["ClientId"] = client_id;
@@ -382,7 +383,8 @@ namespace PTPMultiservice.Areas.Admin.Controllers
         {
             ClientRelationFormViewModel viewModel = new ClientRelationFormViewModel
             {
-                Title = "Add Client Relation"
+                Title = "Add Client Relation",
+                Relations = ManageDependancyData.GetRelations()
             };
 
             return View("ClientRelationForm", viewModel);
@@ -445,6 +447,7 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                 relation_id = clientRelationInDb.relation_id,
                 relation_name = clientRelationInDb.relation_name,
                 remarks = clientRelationInDb.remarks,
+                Relations = ManageDependancyData.GetRelations(),
                 Title = "Edit Client Relation"
             };
 
