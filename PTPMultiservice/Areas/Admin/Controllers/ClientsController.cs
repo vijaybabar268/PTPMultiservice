@@ -30,7 +30,8 @@ namespace PTPMultiservice.Areas.Admin.Controllers
                     Regions = ManageDependancyData.GetRegions(),
                     Industries = ManageDependancyData.GetIndustryTypes(),
                     ClientContactDetails = _context.ClientContactDetails.ToList(),
-                    ClientRelations = _context.ClientRelations.ToList()
+                    ClientRelations = _context.ClientRelations.ToList(),
+                    MappedEmployees = _context.ClientEmployeesMapping.ToList()
                 };
 
                 return View(viewModel);
@@ -472,6 +473,149 @@ namespace PTPMultiservice.Areas.Admin.Controllers
             return RedirectToAction("ClientRelationsIndex",
                 new { client_id = int.Parse(Session["ClientId"].ToString()) });
         }
+        #endregion
+
+        #region Map Employees to Client
+        public ActionResult MapEmployeesToClientIndex(int client_id)
+        {
+            try
+            {
+                List<ClientEmployeesMapping> mappings = _context.ClientEmployeesMapping.Where(d => d.client_id == client_id).ToList();
+
+                MapEmployeesToClientViewModel viewModel = new MapEmployeesToClientViewModel
+                {
+                    ClientEmployeesMappings = mappings,
+                    Employees = _context.Employees.ToList()
+                };
+
+                Session["ClientId"] = client_id;
+
+                var client = _context.Clients.FirstOrDefault(p => p.client_id == client_id);
+                ViewBag.Title = "Mapping Employees For " + client.client_name + " " + client.branch;
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public ActionResult MapEmployeesToClientNew()
+        {
+            MapEmployeesToClientFormViewModel viewModel = new MapEmployeesToClientFormViewModel
+            {
+                Title = "Map Employee to Client",
+                Employees = _context.Employees.ToList()
+            };
+
+            return View("MapEmployeeToClientForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MapEmployeesToClientSave(MapEmployeesToClientFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("MapEmployeeToClientForm", viewModel);
+            }
+
+            if (viewModel.client_employee_map_id == 0)
+            {
+                ClientEmployeesMapping mapping = new ClientEmployeesMapping
+                {
+                    employee_id = viewModel.employee_id,
+                    created_on = DateTime.Now,
+                    is_active = true,
+                    client_id = int.Parse(Session["ClientId"].ToString())
+                };
+
+                _context.ClientEmployeesMapping.Add(mapping);
+                _context.SaveChanges();
+            }
+            else
+            {
+                ClientEmployeesMapping mappingInDb = _context.ClientEmployeesMapping.Where(x => x.client_employee_map_id == viewModel.client_employee_map_id).FirstOrDefault();
+
+                if (mappingInDb == null)
+                {
+                    ModelState.AddModelError("", "Bad request.");
+                    return View("MapEmployeeToClientForm", viewModel);
+                }
+
+                mappingInDb.employee_id = viewModel.employee_id;
+
+                _context.Entry(mappingInDb).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("MapEmployeesToClientIndex",
+                new { client_id = int.Parse(Session["ClientId"].ToString()) });
+        }
+
+        public ActionResult MapEmployeesToClientEdit(int id)
+        {
+            ClientEmployeesMapping mappingInDb = _context.ClientEmployeesMapping.Where(x => x.client_employee_map_id == id).FirstOrDefault();
+
+            if (mappingInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("MapEmployeeToClientForm", mappingInDb);
+            }
+
+            MapEmployeesToClientFormViewModel viewModel = new MapEmployeesToClientFormViewModel
+            {
+                employee_id = mappingInDb.employee_id,
+                client_id = int.Parse(Session["ClientId"].ToString()),
+                Title = "Tearms Condition Edit",
+                Employees = _context.Employees.ToList()
+            };
+
+            return View("MapEmployeeToClientForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MapEmployeesToClientDelete(int id)
+        {
+            ClientEmployeesMapping mappingInDb = _context.ClientEmployeesMapping.Where(x => x.client_employee_map_id == id).FirstOrDefault();
+
+            if (mappingInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("MapEmployeeToClientForm", mappingInDb);
+            }
+
+            _context.ClientEmployeesMapping.Remove(mappingInDb);
+            _context.SaveChanges();
+
+            return RedirectToAction("MapEmployeesToClientIndex",
+                new { client_id = int.Parse(Session["ClientId"].ToString()) });
+        }
+
+        public ActionResult MapEmployeesToClientToggleStatus(int id)
+        {
+            ClientEmployeesMapping mappingInDb = _context.ClientEmployeesMapping.Where(x => x.client_employee_map_id == id).FirstOrDefault();
+
+            if (mappingInDb == null)
+            {
+                ModelState.AddModelError("", "Not found.");
+                return View("MapEmployeeToClientForm", mappingInDb);
+            }
+
+            if (mappingInDb.is_active)
+                mappingInDb.is_active = false;
+            else
+                mappingInDb.is_active = true;
+
+            _context.Entry(mappingInDb).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
+
+            return RedirectToAction("MapEmployeesToClientIndex",
+                new { client_id = int.Parse(Session["ClientId"].ToString()) });
+        }
+
         #endregion
     }
 }

@@ -1,7 +1,7 @@
-﻿@*@if (@Session["AdminId"] == null)
+﻿@if (@Session["AdminId"] == null)
 {
     Response.Redirect("~/Admin");
-}*@
+}
 
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
@@ -43,7 +43,7 @@
                                 </li>*@
                             </ul>
                         </li>
-                        <li class="dropdown">
+                        @*<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li>
@@ -53,7 +53,7 @@
                                     @Html.ActionLink("Map Employees to Client", "Index", "MapEmployeesToClient")
                                 </li>
                             </ul>
-                        </li>
+                        </li>*@
                     </ul>
 
                 </div>

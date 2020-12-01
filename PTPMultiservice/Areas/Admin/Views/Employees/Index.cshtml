@@ -39,9 +39,9 @@
                         <td>@srNo</td>
                         <td>
                             @Html.ActionLink(string.Format("{0} {1} {2}", item.first_name, item.middle_name, item.last_name), "Details", new { id = item.employee_id }, new { @class = "btn btn-link", Title = "Click me for more information.", style = "padding-left: 0;" })
-                        <br /><span>@item.mobile_no</span>
-                        <br /><span>@item.email_address</span>
-                    </td>
+                            <br /><span>@item.mobile_no</span>
+                            <br /><span>@item.email_address</span>                            
+                        </td>
                     <td>
                         <div class="imageContainer">
                             <img height="120" width="125" src="@Request.Url.GetLeftPart(UriPartial.Authority)//@item.photo" />

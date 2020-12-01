@@ -37,17 +37,18 @@
     }
 </style>
 
+<div class="avatar text-center">
+    <img src="~/Content/img/admin-ptp-logo.jpeg" alt="Logo" height="185">
+</div>
+<br />
 <div class="row my-login-form jumbotron">
+
     <div class="col-md-12">
         <div class="">
             @using (Html.BeginForm("IndexProcess", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
             {
                 @Html.AntiForgeryToken()
-
-                <div class="avatar">
-                    <img src="~/Content/img/avatar.png" alt="Avatar">
-                </div>
-
+                                
                 <h2 class="text-center">@ViewBag.Title</h2>
 
                 <div class="form-group">
@@ -84,7 +85,7 @@
 
 
         $(".js-forgot-pwd, .js-new-admin").click(function () {
-            alert("In case any query kindly contact:-  \nVijay Babar \nMobile:- 9619331535, 7977510092 \nEmail:- babarvm@gmail.com \nThank you.");
+            alert("In case any query kindly contact:-  \nVijay Babar, Ajit Phadtare \nMobile:- 9619331535, 7977510092 \nEmail:- babarvm@gmail.com \nThank you.");
         })
     });       
 </script>

@@ -56,7 +56,9 @@
                             </td>
                             <td class="remove-padding">
                                 @Html.ActionLink("Contact Details", "ClientContactsIndex", "Clients", new { client_id = item.client_id }, new { @class = "btn btn-link" }) (@Model.ClientContactDetails.Where(d => d.client_id == item.client_id).Count()) |
-                                @Html.ActionLink("Manage Relations", "ClientRelationsIndex", "Clients", new { client_id = item.client_id }, new { @class = "btn btn-link" }) (@Model.ClientRelations.Where(d => d.client_id == item.client_id).Count())                                
+                                @Html.ActionLink("Manage Relations", "ClientRelationsIndex", "Clients", new { client_id = item.client_id }, new { @class = "btn btn-link" }) (@Model.ClientRelations.Where(d => d.client_id == item.client_id).Count()) |
+                                @Html.ActionLink("Map Employees", "MapEmployeesToClientIndex", "Clients", new { client_id = item.client_id }, new { @class = "btn btn-link" })
+                                (@Model.MappedEmployees.Where(d => d.client_id == item.client_id).Count())
                             </td>
                             <td class="remove-padding">
                                 @Html.ActionLink("Edit", "Edit", "clients", new { id = item.client_id }, new { @class = "btn btn-link" }) |

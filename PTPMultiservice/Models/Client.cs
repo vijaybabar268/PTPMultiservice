@@ -46,4 +46,15 @@ namespace PTPMultiservice.Models
         public string remarks { get; set; }
         public int client_id { get; set; }
     }
+
+    [Table("client_employees_mapping")]
+    public class ClientEmployeesMapping
+    {
+        [Key]
+        public int client_employee_map_id { get; set; }        
+        public int client_id { get; set; }
+        public int employee_id { get; set; }
+        public DateTime created_on { get; set; }
+        public bool is_active { get; set; }
+    }
 }

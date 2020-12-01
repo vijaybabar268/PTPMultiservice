@@ -21,7 +21,8 @@ namespace PTPMultiservice.ViewModels
         public IEnumerable<Dropdown> Industries { get; set; }
 
         public IEnumerable<ClientContactDetail> ClientContactDetails { get; set; }
-        public IEnumerable<ClientRelation> ClientRelations { get; set; }    
+        public IEnumerable<ClientRelation> ClientRelations { get; set; }
+        public IEnumerable<ClientEmployeesMapping> MappedEmployees { get; set; }
     }
 
     public class ClientFormViewModel
@@ -146,4 +147,36 @@ namespace PTPMultiservice.ViewModels
 
         public IEnumerable<Dropdown> Relations { get; set; }
     }
+
+    public class MapEmployeesToClientViewModel
+    {
+        public string Title
+        {
+            get
+            {
+                return "Map Employees to Client";
+            }
+        }
+
+        public IEnumerable<ClientEmployeesMapping> ClientEmployeesMappings { get; set; }
+        public IEnumerable<Employee> Employees { get; set; }
+    }
+
+    public class MapEmployeesToClientFormViewModel
+    {
+        public int client_employee_map_id { get; set; }
+        
+        public int client_id { get; set; }
+
+        [Display(Name = "Select Employee")]
+        public int employee_id { get; set; }
+
+        public DateTime created_on { get; set; }
+        public bool is_active { get; set; }
+
+        public string Title { get; set; }
+
+        public IEnumerable<Employee> Employees { get; set; }
+    }
+
 }

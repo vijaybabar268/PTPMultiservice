@@ -1,4 +1,4 @@
-﻿@model PTPMultiservice.ViewModels.MapClientsToPartnerViewModel
+﻿@model PTPMultiservice.ViewModels.MapEmployeesToClientViewModel
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -13,26 +13,26 @@
 
 <h2 class="adminTitle text-center text-uppercase">@ViewBag.Title</h2>
 
-@Html.ActionLink("Map Client", "MapClientsToPartnerNew", "Partners", null, new { @class = "btn btn-primary add-btn" })
+@Html.ActionLink("Map Employee", "MapEmployeesToClientNew", "Clients", null, new { @class = "btn btn-primary add-btn" })
 
 <div class="tableDiv">
     <table id="adminTbl" class="table table-bordered table-hover table-responsive table-striped">
         <thead>
             <tr>
                 <th>Sr</th>
-                <th>Client Name</th>                
+                <th>Employee Name</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @{
-                foreach (var item in Model.PartnerClientsMappings)
+                foreach (var item in Model.ClientEmployeesMappings)
                 {
                     <tr>
                         <td>@srNo</td>
                         <td>
-                            @Html.ActionLink(string.Format("{0} - {1}", Model.Clients.FirstOrDefault(x => x.client_id == item.client_id).client_name, Model.Clients.FirstOrDefault(x => x.client_id == item.client_id).branch), "Details", "Clients", new { id = item.client_id }, new { @class = "btn btn-link", Title = "Click me for more information.", target="_blank" })
+                            @Html.ActionLink(string.Format("{0} {1} {2}", Model.Employees.FirstOrDefault(x => x.employee_id == item.employee_id).first_name, @Model.Employees.FirstOrDefault(x => x.employee_id == item.employee_id).middle_name, @Model.Employees.FirstOrDefault(x => x.employee_id == item.employee_id).last_name), "Details", "Employees", new { id = item.employee_id }, new { @class = "btn btn-link", Title = "Click me for more information.", target = "_blank" })                            
                         </td>
                         <td>
                             @{
@@ -45,13 +45,13 @@
                                     <span class="badge badge-warning">In-Active</span>
                                 }
                             }
-                        </td>                       
-                        <td class="remove-padding">                            
-                            @Html.ActionLink("Toggle Status", "MapClientsToPartnerToggleStatus", "Partners", new { id = item.partner_client_map_id }, new { @class = "btn btn-link" }) |
-                            @using (@Html.BeginForm("MapClientsToPartnerDelete", "Partners", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                        </td>
+                        <td class="remove-padding">
+                            @Html.ActionLink("Toggle Status", "MapEmployeesToClientToggleStatus", "Clients", new { id = item.client_employee_map_id }, new { @class = "btn btn-link" }) |
+                            @using (@Html.BeginForm("MapEmployeesToClientDelete", "Clients", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
                             {
                                 @Html.AntiForgeryToken()
-                                @Html.Hidden("id", item.partner_client_map_id)
+                                @Html.Hidden("id", item.client_employee_map_id)
                                 <button type="submit" class="btn btn-link" style=" padding: 0;">Delete</button>
                             }
                         </td>
