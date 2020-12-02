@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+
+<div style="display:block;">
+    <div class="jumbotron">        
+        <h1>PTP MULTISERVICE DASHBOARD</h1>
+        <p class="lead text-center">Pride Through Performance</p>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="well">
+                <h3>@Html.ActionLink("All Partners", "Index", "Partners") <span class="label label-default">15</span></h3>
+                <p>Active <span class="label label-default">10</span></p>
+                <p>In-Active <span class="label label-default">5</span></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="well">
+                <h3>@Html.ActionLink("All Clients", "Index", "Clients") <span class="label label-default">25</span></h3>
+                <p>Active <span class="label label-default">20</span></p>
+                <p>In-Active <span class="label label-default">5</span></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="well">
+                <h3>@Html.ActionLink("All Employees", "Index", "Employees") <span class="label label-default">10</span></h3>
+                <p>Active <span class="label label-default">8</span></p>
+                <p>In-Active <span class="label label-default">2</span></p>
+            </div>
+        </div>
+    </div>        
+</div>
+
+
+
+
+<script>
+    $(function () {
+        $('footer').hide();
+    })
+</script>

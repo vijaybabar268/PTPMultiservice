@@ -1,0 +1,60 @@
+﻿@model PTPMultiservice.ViewModels.EmployeeBankDetailViewModel
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int srNo = 1;
+}
+
+<style>
+    .remove-padding a {
+        padding: 0;
+    }
+</style>
+
+<h2 class="adminTitle text-center text-uppercase">@ViewBag.Title</h2>
+
+@Html.ActionLink("Add Employee Bank Detail", "EmployeeBankDetailsNew", "Employees", null, new { @class = "btn btn-primary add-btn" })
+
+<div class="tableDiv">
+    <table id="adminTbl" class="table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Sr</th>
+                <th>Account No</th>
+                <th>Holder Name</th>
+                <th>Bank Name</th>
+                <th>IFSC Code</th>
+                <th>Branch Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.EmployeeBankDetails)
+                {
+                    <tr>
+                        <td>@srNo</td>
+                        <td>@item.account_no</td>
+                        <td>@item.bank_holder_name</td>
+                        <td>@item.bank_name</td>
+                        <td>@item.ifsc_code</td>
+                        <td>@item.branch_name</td>
+                        <td class="remove-padding">
+                            @Html.ActionLink("Edit", "EmployeeBankDetailsEdit", "Employees", new { id = item.bank_id }, new { @class = "btn btn-link" }) |
+
+                            @using (@Html.BeginForm("EmployeeBankDetailsDelete", "Employees", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", item.bank_id)
+                                <button type="submit" class="btn btn-link" style=" padding: 0;">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                    srNo++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@Html.ActionLink("Back to List", "Index", "Employees", null, new { @class = "btn btn-link add-btn" })

@@ -1,0 +1,60 @@
+﻿@model PTPMultiservice.ViewModels.PartnerDocumentViewModel
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int srNo = 1;
+}
+
+<style>
+    .remove-padding a {
+        padding: 0;
+    }
+</style>
+
+<h2 class="adminTitle text-center text-uppercase">@ViewBag.Title</h2>
+
+@Html.ActionLink("Add Partner Document", "PartnerDocumentsNew", "Partners", null, new { @class = "btn btn-primary add-btn" })
+
+<div class="tableDiv">
+    <table id="adminTbl" class="table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Sr</th>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Birthdate</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.Documents)
+                {
+                    <tr>
+                        <td>@srNo</td>
+                        <td>@Model.DocumentTypes.FirstOrDefault(x => x.Id.ToString() == item.type).Name</td>
+                        <td>@item.name</td>
+                        <td>@item.number</td>
+                        <td>@string.Format("{0:dd-MM-yyyy}", item.birthdate)</td>
+                        <td>@item.address</td>
+                        <td class="remove-padding">
+                            @Html.ActionLink("Edit", "PartnerDocumentsEdit", "Partners", new { id = item.document_id }, new { @class = "btn btn-link" }) |
+
+                            @using (@Html.BeginForm("PartnerDocumentsDelete", "Partners", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", item.document_id)
+                                <button type="submit" class="btn btn-link" style=" padding: 0;">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                    srNo++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@Html.ActionLink("Back to List", "Index", "Partners", null, new { @class = "btn btn-link add-btn" })

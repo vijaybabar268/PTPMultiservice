@@ -67,6 +67,8 @@ D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\Microsoft.Owin.Security.M
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\Microsoft.Owin.Security.OAuth.dll
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\Microsoft.Owin.Security.Twitter.dll
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\Microsoft.Web.Infrastructure.dll
+D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\MySql.Data.dll
+D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\MySql.Data.Entity.EF6.dll
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\Newtonsoft.Json.dll
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\Owin.dll
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\System.Web.Helpers.dll
@@ -77,6 +79,8 @@ D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\System.Web.WebPages.Deplo
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\System.Web.WebPages.dll
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\System.Web.WebPages.Razor.dll
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\WebGrease.dll
+D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\MySql.Data.xml
+D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\MySql.Data.Entity.EF6.xml
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\System.Web.Helpers.xml
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\System.Web.Mvc.xml
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\System.Web.Optimization.xml
@@ -101,8 +105,8 @@ D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\Microsoft.Owin.Security.T
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\Microsoft.Owin.Security.OAuth.xml
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\obj\Debug\PTPMultiservice.csprojAssemblyReference.cache
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\obj\Debug\PTPMultiservice.csproj.CoreCompileInputs.cache
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\obj\Debug\PTPMultiservice.csproj.CopyComplete
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\obj\Debug\PTPMultiservice.dll
 D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\obj\Debug\PTPMultiservice.pdb
+D:\Projects\MIDAMS\PTPMultiservice\PTPMultiservice\obj\Debug\PTPMultiservice.csprojAssemblyReference.cache

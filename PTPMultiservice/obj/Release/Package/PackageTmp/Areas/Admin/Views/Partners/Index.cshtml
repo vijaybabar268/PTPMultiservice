@@ -1,0 +1,83 @@
+﻿@model PTPMultiservice.ViewModels.PartnerViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int srNo = 1;
+}
+
+<style>
+    .remove-padding a{
+        padding: 0;
+    }
+</style>
+
+<h2 class="adminTitle text-center text-uppercase">@ViewBag.Title</h2>
+
+@Html.ActionLink("Add Partner", "New", "Partners", null, new { @class = "btn btn-primary add-btn" })
+
+<div class="tableDiv">
+    <table id="adminTbl" class="table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Sr</th>
+                <th>Name</th>
+                <th>Mobile No</th>
+                <th>Email</th>
+                <th>DOJ</th>
+                <th>Education</th>
+                <th>Designation</th>
+                <th>Status</th>
+                <th width="16%">Other Info</th>
+                <th width="13%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.Partners)
+                {
+                    <tr>
+                        <td>@srNo</td>
+                        <td>@Html.ActionLink(string.Format("{0} {1} {2}", item.first_name, item.middle_name, item.last_name), "Details", new { id = item.partner_id }, new { @class = "btn btn-link", Title = "Click me for more information." })</td>
+                        <td>@item.mobile</td>
+                        <td>@item.email</td>
+                        <td>@string.Format("{0:dd MMM yyyy}", item.joining_date)</td>                        
+                        <td>@Model.EducationQualifications.FirstOrDefault(x => x.Id == item.education_id).Name</td>
+                        <td>@Model.Designations.FirstOrDefault(x => x.Id == item.designation_id).Name</td>                        
+                        <td>
+                            @{
+                                if (item.is_active)
+                                {
+                                    <span class="badge badge-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">In-Active</span>
+                                }
+                            }
+                        </td>
+                        <td class="remove-padding">
+                            @Html.ActionLink("Document Details", "PartnerDocumentsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.PartnerDocuments.Where(d => d.partner_id == item.partner_id).Count()) |
+                            @Html.ActionLink("Bank Details", "BankDetailsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.PartnerBankDetails.Where(d => d.partner_id == item.partner_id).Count()) |
+                            @Html.ActionLink("Tearms & Conditions", "TearmsConditionsIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" }) (@Model.PartnerTermsConditions.Where(d => d.partner_id == item.partner_id).Count()) |
+                            @Html.ActionLink("Map Clients", "MapClientsToPartnerIndex", "Partners", new { partner_id = item.partner_id }, new { @class = "btn btn-link" })
+                              (@Model.MappedClients.Where(d => d.partner_id == item.partner_id).Count())
+                        </td>
+                        <td class="remove-padding"> 
+                            @Html.ActionLink("Edit", "Edit", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Toggle Status", "ToggleStatus", "Partners", new { id = item.partner_id }, new { @class = "btn btn-link", onClick = "return confirm('Are you sure you want to perform this action?')" }) |
+
+                            @using (@Html.BeginForm("Delete", "Partners", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", item.partner_id)
+                                <button type="submit" class="btn btn-link" style=" padding: 0;">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                    srNo++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
