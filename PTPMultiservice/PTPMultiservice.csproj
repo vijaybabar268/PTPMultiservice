@@ -204,6 +204,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AdminFormViewModel.cs" />
     <Compile Include="ViewModels\ClientViewModel.cs" />
+    <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\PartnerViewModel.cs" />
   </ItemGroup>

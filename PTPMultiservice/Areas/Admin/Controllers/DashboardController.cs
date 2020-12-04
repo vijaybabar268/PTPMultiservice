@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PTPMultiservice.Models;
+using PTPMultiservice.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,23 @@ namespace PTPMultiservice.Areas.Admin.Controllers
 {
     public class DashboardController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public DashboardController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
         public ActionResult Index()
         {
-            return View();
+            var viewModel = new DashboardViewModel
+            {
+                Partners = _context.Partners.ToList(),
+                Clients = _context.Clients.ToList(),
+                Employees = _context.Employees.ToList()
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
