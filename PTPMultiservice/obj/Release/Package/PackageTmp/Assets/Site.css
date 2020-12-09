@@ -43,7 +43,7 @@ textarea {
     background-color: #907087;
 }
 
-.btn-primary {
+.btn-primary, table thead {
     color: #fff;
     background-color: #A53691;
     border-color: #A53691;
